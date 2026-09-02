@@ -73,7 +73,54 @@ async fn main() {
         self_healing_feed: Arc::new(Mutex::new(Vec::new())),
     };
 
-    // 4. Siapkan Router Axum
+    // 4. Background Sync Worker ke GPlay AI Gateway
+    let sync_state = state.clone();
+    tokio::spawn(async move {
+        let mut interval = tokio::time::interval(std::time::Duration::from_secs(5));
+        loop {
+            interval.tick().await;
+            let maybe_metric = sync_state.latest_metrics.lock().unwrap().clone();
+            if let Some(metric) = maybe_metric {
+                let client_name = {
+                    let lic_guard = sync_state.license_status.lock().unwrap();
+                    lic_guard.as_ref().map(|l| l.client_id.clone()).unwrap_or_else(|| "CTARTech Enterprise Node".to_string())
+                };
+
+                let metric_json = serde_json::json!({
+                    "device_id": metric.device_id,
+                    "wattage": metric.wattage,
+                    "temperature_c": metric.temperature_c,
+                    "voltage_v": metric.voltage_v,
+                    "fan_speed_pct": metric.fan_speed_pct,
+                    "sm_clock_mhz": metric.sm_clock_mhz,
+                    "mem_clock_mhz": metric.mem_clock_mhz,
+                    "gpu_utilization_pct": metric.gpu_utilization_pct,
+                    "vram_used_mb": metric.vram_used_mb,
+                    "vram_total_mb": metric.vram_total_mb,
+                    "tokens_per_sec": metric.tokens_per_sec,
+                    "joules_per_token": metric.joules_per_token,
+                    "carbon_rate_gco2": metric.carbon_rate_gco2,
+                    "timestamp": metric.timestamp,
+                });
+
+                match sync_state.gplay_client.sync_telemetry_batch(
+                    "zenty-cluster-01",
+                    &client_name,
+                    "Enterprise",
+                    vec![metric_json],
+                ).await {
+                    Ok(_) => {
+                        println!("🌐 [GPLAY AI SYNC] Berhasil mengirim stream telemetri ke GPlay Gateway ({})", sync_state.gplay_client.endpoint_url);
+                    }
+                    Err(_e) => {
+                        // Fallback silang aman
+                    }
+                }
+            }
+        }
+    });
+
+    // 5. Siapkan Router Axum
     let app = app_router(state);
 
     let port: u16 = std::env::var("PORT")
