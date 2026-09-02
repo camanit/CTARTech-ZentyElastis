@@ -22,9 +22,15 @@ dist/
 *.log
 
 # Sensitive Cryptography & Licensing Enclave (DO NOT COMMIT!)
+Desain Arsitektur Sistem CTARTech-Elastis.txt
+tools/
+tools/license-issuer/
 *.lic
 *.key
+*.pem
 private_key.pem
+public_key.pem
+keys/
 tools/license-issuer/keys/
 tools/license-issuer/*.pem
 tools/license-issuer/*.lic
