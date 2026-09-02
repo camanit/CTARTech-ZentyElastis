@@ -212,6 +212,9 @@ pub fn render_dashboard_html() -> &'static str {
             <div class="pill pill-purple" id="badge-mesh">
                 <span>Zero-Trust HMAC Active</span>
             </div>
+            <div class="pill pill-cyan" onclick="toggleLang()" style="cursor: pointer; user-select: none;">
+                <span id="lang-pill">🌐 EN | ID</span>
+            </div>
         </div>
     </header>
 
@@ -304,8 +307,8 @@ pub fn render_dashboard_html() -> &'static str {
                     <span id="breaker-icon">🟢</span>
                     <span id="breaker-text">CIRCUIT BREAKER ARMED</span>
                 </div>
-                <p style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">
-                    Pemutus sirkuit hardware otonom aktif. Beban otomatis diputus jika suhu &gt;85°C atau tarikan daya &gt;3,500W.
+                <p style="font-size: 11px; color: var(--text-muted); line-height: 1.5;" id="txt-breaker-desc">
+                    Autonomous hardware circuit breaker active. GPU load automatically isolated if temp &gt;85°C or power &gt;3,500W.
                 </p>
                 <button class="btn-action btn-kill" id="btn-kill" onclick="tripBreaker()">
                     ⚡ MANUAL EMERGENCY TRIP (KILL-SWITCH)
@@ -343,7 +346,7 @@ pub fn render_dashboard_html() -> &'static str {
                         <strong id="sla-override-cap" style="color: var(--neon-emerald);">NONE (Peak Shaving Allowed)</strong>
                     </div>
                     <div id="sla-advisory" style="font-size: 11px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); color: #e5e7eb; border-left: 3px solid var(--neon-emerald);">
-                        Menunggu telemetri inferensi...
+                        Awaiting inference telemetry stream...
                     </div>
                 </div>
             </div>
@@ -364,8 +367,8 @@ pub fn render_dashboard_html() -> &'static str {
                     <div><span style="color: var(--text-muted);">Audit Standard:</span> <span style="color: var(--text-main);">ISO 14064-1 & GHG Protocol Scope 2</span></div>
                     <div><span style="color: var(--text-muted);">Verification:</span> <span style="color: var(--neon-emerald);">CRYPTOGRAPHICALLY SEALED (SHA-256)</span></div>
                 </div>
-                <button onclick="downloadEsgCertificate()" class="btn-action" style="background: linear-gradient(135deg, #059669, #10b981); color: #fff; font-size: 12px; font-weight: 700;">
-                    📜 UNDUH SERTIFIKAT AUDIT ESG RESMI (.JSON)
+                <button onclick="downloadEsgCertificate()" class="btn-action" id="btn-download-cert" style="background: linear-gradient(135deg, #059669, #10b981); color: #fff; font-size: 12px; font-weight: 700;">
+                    📜 DOWNLOAD OFFICIAL ESG AUDIT CERTIFICATE (.JSON)
                 </button>
             </div>
         </div>
@@ -385,7 +388,7 @@ pub fn render_dashboard_html() -> &'static str {
             <div class="panel-body">
                 <div class="feed-list" id="healing-feed">
                     <div class="feed-item" style="--feed-color: var(--neon-emerald);">
-                        <span class="feed-text">Self-Healing Engine Siaga: Pemantauan Thermal & VRAM aktif.</span>
+                        <span class="feed-text">Self-Healing Engine Armed: Real-time Thermal & VRAM monitoring active.</span>
                         <span class="feed-time">BOOT</span>
                     </div>
                 </div>
@@ -664,6 +667,21 @@ pub fn render_dashboard_html() -> &'static str {
         } catch (e) {
             alert('Gagal mengunduh sertifikat ESG: ' + e);
         }
+    }
+
+    // Language toggle support (EN default, ID local)
+    let currentLang = 'en';
+    function toggleLang() {
+        currentLang = currentLang === 'en' ? 'id' : 'en';
+        document.getElementById('lang-pill').innerText = currentLang === 'en' ? '🌐 EN' : '🌐 ID';
+        
+        const isEn = currentLang === 'en';
+        document.getElementById('txt-breaker-desc').innerText = isEn 
+            ? 'Autonomous hardware circuit breaker active. GPU load automatically isolated if temp >85°C or power >3,500W.'
+            : 'Pemutus sirkuit hardware otonom aktif. Beban otomatis diputus jika suhu >85°C atau tarikan daya >3,500W.';
+        document.getElementById('btn-download-cert').innerText = isEn
+            ? '📜 DOWNLOAD OFFICIAL ESG AUDIT CERTIFICATE (.JSON)'
+            : '📜 UNDUH SERTIFIKAT AUDIT ESG RESMI (.JSON)';
     }
 
     // Polling Interval 1500ms
