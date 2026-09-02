@@ -267,7 +267,7 @@ pub async fn ingest_telemetry_handler(
         .unwrap_or("");
 
     let canonical_payload = format!(
-        "{}:{}:{}:{}",
+        "{}:{:.1}:{:.1}:{}",
         payload.device_id, payload.wattage, payload.temperature_c, payload.timestamp
     );
 

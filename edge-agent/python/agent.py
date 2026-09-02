@@ -110,7 +110,7 @@ class EdgeTelemetryAgent:
 
     def generate_harness_signature(self, telemetry: dict) -> str:
         """Menghasilkan signature HMAC-SHA256 untuk Zero-Trust Edge-to-Core Harness."""
-        canonical_msg = f"{telemetry['device_id']}:{telemetry['timestamp']}:{telemetry['wattage']:.1f}:{telemetry['temperature_c']:.1f}"
+        canonical_msg = f"{telemetry['device_id']}:{float(telemetry['wattage']):.1f}:{float(telemetry['temperature_c']):.1f}:{telemetry['timestamp']}"
         signature = hmac.new(
             EDGE_HARNESS_SECRET.encode("utf-8"),
             canonical_msg.encode("utf-8"),
