@@ -1,0 +1,39 @@
+# Rust build artifacts
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+*.egg-info/
+
+# Node / Frontend artifacts
+node_modules/
+.next/
+out/
+build/
+dist/
+.npm
+*.log
+
+# Sensitive Cryptography & Licensing Enclave (DO NOT COMMIT!)
+*.lic
+*.key
+private_key.pem
+tools/license-issuer/keys/
+tools/license-issuer/*.pem
+tools/license-issuer/*.lic
+
+# Environment & IDE
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+*.swp
+*.swo

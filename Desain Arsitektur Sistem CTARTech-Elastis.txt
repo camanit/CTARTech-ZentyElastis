@@ -1,0 +1,390 @@
+Desain Arsitektur Sistem: CTARTech-ZentyElastis
+Sistem ini dirancang menggunakan arsitektur 3-Tier High-Performance Engine berbasis Rust di backend untuk menangani telemetri super cepat dan Next.js di frontend untuk visualisasi Digital Twin.
+
++-----------------------------------------------------------------------------------+
+|               1. EDGE TELEMETRY & AGENT AUTODISCOVERY LAYER                       |
+|  - Vendor-Agnostic Agents (NVIDIA, AMD, TPU, CPU Cluster OS & Containers)         |
+|  - Real-time Telemetry Ingestion (Wattage, Temperature, Water/CO2 Metrics)        |
++-----------------------------------------------------------------------------------+
+                                         |
+                                         v (High-Concurrency Streaming)
++-----------------------------------------------------------------------------------+
+|               2. RUST CORE RUNTIME GATEWAY (Axum Engine <0.1ms Latency)           |
+|  - Power DC GPU Ontology & Semantic Graph Mapping                                 |
+|  - DeepOptiFlex™ AI-Driven Power & Peak Management Engine                         |
+|  - SLAShield™ Guarantee Guard (SLA Protection & Automated Workload Throttling)    |
+|  - Predictive AI Workload Scaling (Linked with CTARTech-AIControlPlane)           |
+|  - Green-Grid Audit Ledger (SOC Merkle Chain for PDP & Carbon Compliance)         |
+|  - Emergency Circuit Breaker (Zero Trust Instant Kill-Switch Protocol)            |
++-----------------------------------------------------------------------------------+
+                                         |
+                                         v (Secured API Layer)
++-----------------------------------------------------------------------------------+
+|               3. ENTERPRISE DASHBOARD & CONTROL PLANE (Next.js 14)                |
+|  - 3D Power & GPU Resource Twin Interactive Heatmaps                              |
+|  - Multi-Tenant Power Budgeting & Token-Based Billing Integration                 |
+|  - Live Kanban Infrastructure Views & Multi-Channel Alert Gateway                 |
++-----------------------------------------------------------------------------------+
+
+-----------------------------------------------------------------------------------
+🔄 ROADMAP PENGEMBANGAN SISTEM: CTARTECH-ZENTYELASTIS (10 MINGGU / 5 SPRINT)
+-----------------------------------------------------------------------------------
+
+Fase 1: Edge Telemetry Ingestion & Zero-Touch Autodiscovery (Minggu 1 – 2)
+- Target: Fondasi komunikasi berkecepatan tinggi antara perangkat keras/GPU dengan gateway utama.
+- Deliverables:
+  1. Rust Core Ingestion Gateway (Axum Engine) dengan latensi ingest sub-milidetik (<0.1ms).
+  2. Edge Telemetry Agent (ringan, berbasis Rust / Python) dengan zero-touch autodiscovery untuk NVIDIA (NVML), AMD (ROCm), TPU, dan CPU cluster.
+  3. Real-time telemetry ingestion (Wattage, Junction Temp, VRAM usage, status aliran pendingin).
+  4. Local in-memory ring buffer untuk meredam lonjakan traffic ekstrem (spike protector).
+- Kriteria Keberhasilan (KPI):
+  - Konsumsi resource agent: CPU <1%, RAM <25MB.
+  - Throughput gateway: Mampu menampung 10.000+ metrik/detik tanpa packet loss.
+
+Fase 2: Offline Air-Gapped License Engine & Actuation Assurance (Minggu 3 – 4)
+- Target: Pengamanan kekayaan intelektual (IP Protection) dan keselamatan fisik perangkat keras (Hardware Fail-safe).
+- Deliverables:
+  1. Offline License Issuer berbasis Ed25519 asimetris (skrip generator lokal developer) untuk menerbitkan file `license.lic` terenkripsi dengan kuota node & batas waktu.
+  2. Zero-Leakage License Verifier di sisi Rust Gateway menggunakan `public_key.pem` secara 100% offline tanpa ketergantungan koneksi luar.
+  3. Actuation Assurance Engine: Evaluasi ambang batas termal dan daya sebelum instruksi fisik dieksekusi ke mesin.
+  4. Zero Trust Emergency Circuit Breaker: Protokol instant kill-switch yang memutus arus atau beban kerja dalam hitungan milidetik saat anomali terdeteksi.
+  5. Graceful License Degradation: Jika lisensi kadaluarsa/invalid, fitur optimasi canggih (DeepOptiFlex™) terkunci otomatis tanpa mengganggu operasional dasar.
+- Kriteria Keberhasilan (KPI):
+  - Verifikasi lisensi bekerja 100% offline tanpa sambungan internet.
+  - Respons Emergency Circuit Breaker <5ms saat suhu >85°C atau daya melampaui batas aman.
+
+Fase 3: Integrasi GPlay AI Data Gateway (gplay.ctar.tech) & DeepOptiFlex™ (Minggu 5 – 6)
+- Target: Menghubungkan telemetri data ke ekosistem terpusat GPlay AI sebagai otak analitik prediktif dan vector knowledge.
+- Deliverables:
+  1. Integrasi Konektor Rust Gateway ke `gplay.ctar.tech` via jalur aman mTLS / TLS 1.3 terenkripsi.
+  2. Ekstraksi dan pengiriman pola beban komputasi LLM/HPC (antrean prompt vs lonjakan daya/suhu) menjadi Vector Embeddings di GPlay AI Bank Data.
+  3. DeepOptiFlex™ Engine: Pengaturan dynamic peak power management berdasarkan intelligence feed langsung dari GPlay AI.
+  4. SLAShield™ Guarantee Guard: Mekanisme otomatis pencegah latency spike saat terjadi penyesuaian daya grid (grid flex events).
+  5. Predictive AI Workload Scaling: Penjadwalan alokasi komputasi cerdas sebelum lonjakan beban terjadi.
+- Kriteria Keberhasilan (KPI):
+  - Latensi query rekomendasi ke `gplay.ctar.tech` <200ms.
+  - Penurunan puncak konsumsi daya (peak shaving) sebesar 15–25% pada uji simulasi beban kerja intensif.
+
+Fase 4: Green-Grid Audit Ledger & Enterprise Security Hardening (Minggu 7 – 8)
+- Target: Memenuhi kepatuhan regulasi lingkungan hidup (Green Grid) dan perlindungan data enterprise (UU PDP & ISO 27001).
+- Deliverables:
+  1. SOC Merkle Chain Audit Ledger: Pencatatan jejak emisi karbon (CO2), konsumsi air, dan aksi aktuasi ke dalam blok kriptografis lokal anti-manipulasi.
+  2. Multi-Layer DDoS Protection: Rate limiter berbasis token-bucket di memori Rust dan mitigasi Layer 3/4 SYN/UDP Flood di reverse proxy/Axum.
+  3. AST Injection Barrier: Penguatan filter injeksi payload dari ZentyCore untuk keamanan API gateway.
+  4. Standardisasi Kepatuhan: Pemetaan isolasi data tenant dan audit trail sesuai ISO 27001, ISO 22301, dan UU PDP No. 27/2022.
+- Kriteria Keberhasilan (KPI):
+  - Bukti integritas log audit (Merkle Root Hash) dapat divalidasi secara independen oleh auditor eksternal.
+  - Sistem lolos uji penetrasi terhadap serangan volumetric DDoS dan injeksi payload.
+
+Fase 5: Enterprise Control Plane, 3D Resource Twin UI & Pilot Run (Minggu 9 – 10)
+- Target: Visualisasi antarmuka Next.js 14 kelas dunia dan pengujian menyeluruh (end-to-end integration).
+- Deliverables:
+  1. Enterprise Dashboard Next.js 14 dengan 3D Power & GPU Resource Twin Interactive Heatmaps (WebGL/Three.js).
+  2. Multi-Tenant Power Budgeting & Token-Based Billing Integration.
+  3. Live Kanban Infrastructure Views dan Multi-Channel Alert Gateway (Telegram, Slack, Email, Webhook).
+  4. Client SDK Packaging (Python / Go / Node.js) dan dokumentasi integrasi enterprise.
+  5. Pengujian komprehensif (Pilot Deployment): Edge Agent -> Rust Gateway -> GPlay AI (gplay.ctar.tech) -> Dashboard.
+- Kriteria Keberhasilan (KPI):
+  - Visualisasi 3D berjalan stabil pada 60 FPS di peramban web modern.
+  - End-to-end telemetry update latency dari sensor fisik ke layar dashboard <1 detik.
+
+
+
+Skema arsitektur penegakan lisensi dan integrasinya untuk CTARTech-Elastis bisa dirancang seperti ini:
+
+Air-Gapped License Issuer (Sisi Developer / Mesin Kamu):
+
+Sama seperti sistem CTARTech-AIControlPlane, kamu menggunakan Ed25519 Asymmetric Private Key yang aman di perangkat lokalmu untuk menerbitkan file lisensi terenkripsi (license.lic) kepada klien korporat yang berlangganan.
+
+Klien hanya akan mendapatkan Public Key (public_key.pem) di dalam aplikasi mereka untuk memverifikasi keaslian lisensi secara offline tanpa perlu koneksi internet ke server eksternal.
+
+Middleware & Client SDK (Sisi Klien / Perusahaan):
+
+Menyediakan paket SDK ringan (misalnya untuk Python, Node.js, atau Go) yang dipasang di lingkungan manajemen infrastruktur kluster GPU milik klien.
+
+SDK ini berfungsi sebagai penghubung otomatis yang mengirimkan telemetri daya (wattage, suhu, metrik deepoptiflex) ke gateway Rust milik CTARTech-Elastis di pusat data mereka.
+
+Runtime Policy Enforcement:
+
+Jika masa berlaku lisensi habis atau kunci privat tidak valid saat diverifikasi oleh runtime gateway, sistem secara otomatis mengunci fitur optimasi tingkat lanjut (DeepOptiFlex™ dan SLAShield™) guna melindungi hak cipta perangkat lunakmu.
+
+Penerapan Bank Data AI terintegrasi dengan GPlay AI Gateway (gplay.ctar.tech):
+
+1. Pusat Orkesstrasi Data AI Terpusat (gplay.ctar.tech):
+Seluruh pengelolaan data cerdas difokuskan pada gplay.ctar.tech sebagai gerbang utama AI data. Hal ini membebaskan node lokal dari beban berat pengelolaan database vektor mandiri, sekaligus menyediakan intelligence hub yang konsisten.
+
+2. Penyimpanan Telemetri Historis & Pola Beban (Time-Series Lokal & Vector Embeddings GPlay):
+- Di tingkat lokal: Rust Core Runtime Gateway mencatat metrik time-series mentah (suhu, watt, lonjakan tegangan) untuk kebutuhan aktuasi real-time instan.
+- Di tingkat GPlay AI (gplay.ctar.tech): Telemetri berkala dikonversi menjadi vector embeddings pola beban LLM/HPC (korelasi antrean prompt vs tarikan daya). Model AI di gplay.ctar.tech mempelajari pola ini guna memprediksi lonjakan beban dan mensuplai rekomendasi ke DeepOptiFlex™.
+
+3. Pusat Pengetahuan Ontologi & Semantic Knowledge Graph:
+gplay.ctar.tech memetakan hubungan hierarkis antar-perangkat (dari unit GPU/TPU, rak server, pendingin AC, hingga gardu listrik utama). AI memanfaatkan graf ini untuk mengambil keputusan cepat saat pengalihan beban komputasi (workload migration).
+
+4. Kepatuhan Tata Kelola & Privasi Data (Air-Gapped & Hybrid Enterprise):
+Untuk deployment perbankan/BUMN dengan regulasi privasi data ketat, jalur transmisi ke gplay.ctar.tech dilindungi enkripsi mTLS dan anonymizer data metrik (zero PII leakage), atau dapat menggunakan opsi instance proxy GPlay terisolasi lokal.
+
+
++-----------------------------------------------------------------------------------+
+|               OFFLINE LICENSE ISSUER (tools/license-issuer/)                      |
+|  - Ed25519 Asymmetric Private Key (Aman di Mesin Lokal Developer)                 |
+|  - Menerbitkan file `license.lic` terenkripsi untuk Klien Korporat                |
++-----------------------------------------------------------------------------------+
+                                         | (Distribusi Public Key saja)
+                                         v
++-----------------------------------------------------------------------------------+
+|               RUST CORE RUNTIME GATEWAY (Axum Engine <0.1ms Latency)              |
+|  - Zero-Leakage License Verifier (Offline Check via public_key.pem)               |
+|  - Power DC GPU Ontology & Semantic Knowledge Connector                           |
+|  - DeepOptiFlex™ AI Power Peak Manager & SLAShield™ Guardian                      |
+|  - Emergency Circuit Breaker (Instant Zero Trust Hardware Kill-Switch)            |
++-----------------------------------------------------------------------------------+
+             |                                              |
+             v (Raw Streaming Ingestion)                    v (Secure mTLS / gRPC / HTTPS)
++-------------------------------+      +--------------------------------------------+
+|   LOCAL TIME-SERIES BUFFER    |      |       🌐 gplay.ctar.tech (GPlay AI Gateway)|
+|  - Real-time Wattage & Temp   |      |  - Central AI Knowledge & Vector Bank      |
+|  - Carbon & Water Raw Metrics |      |  - Riwayat Pola Beban Kerja LLM Embeddings |
+|  - Immediate Actuation Data   |      |  - DeepOptiFlex™ Intelligence Feeder       |
+|  - SOC Merkle Chain Log       |      |  - Predictive AI Workload Scaling Model    |
++-------------------------------+      +--------------------------------------------+
+
+🔄 Tahapan & Alur Kerja Sistem (Workflow):
+1. Tahap Inisialisasi & Lisensi Aman (Air-Gapped):
+   - Penerbitan: Developer menerbitkan lisensi offline menggunakan skrip lokal Ed25519 (keygen.py / Rust equivalent) yang berisi masa berlaku dan kuota node.
+   - Verifikasi: Gateway memverifikasi tanda tangan digital menggunakan public_key.pem secara offline.
+   - Fail-Safe: Jika lisensi invalid atau expired, fitur DeepOptiFlex™ terkunci otomatis, sedangkan telemetri dasar tetap berjalan aman.
+2. Tahap Pengumpulan Data & Orkestrasi GPlay AI Data Gateway:
+   - Autodiscovery: Agen mendeteksi GPU/TPU/CPU secara zero-touch dan menyuntikkan metadata ke Power DC Ontology™.
+   - Aliran Data GPlay AI: Rust Gateway menyalurkan data fitur telemetri ke gplay.ctar.tech sebagai pusat bank data AI dan vector embeddings.
+   - Prediksi Cerdas: Model AI di gplay.ctar.tech memberikan instruksi optimalisasi daya secara dinamis ke DeepOptiFlex™ dan SLAShield™.
+3. Tahap Eskalasi & Pelaporan Kepatuhan:
+   - Setiap anomali daya atau keputusan penyesuaian beban kerja dicatat ke dalam SOC Merkle Chain Audit Ledger lokal yang transparan, siap audit UU PDP, ISO 27001, dan standar Green Grid.
+
+
+Supaya sistem tetap kencang khas backend Rust tanpa bikin latency bengkak, proteksi Anti-DDoS dan keamanan jaringan ini bisa kita rancang berlapis (multi-layer defense):
+
+Edge Rate Limiter & Smart WAF (Web Application Firewall):
+
+Menggunakan modul Rate Limiter berbasis token-bucket di memori Rust untuk menepis serangan Layer 7 DDoS (seperti HTTP Flood atau Credential Stuffing) sebelum sempat membebani database atau model AI.
+
+Filter injeksi otomatis (AST Injection Barrier) yang sudah ada di ZentyCore diperkuat untuk mendeteksi pola anomali payload HTTP mencurigakan secara real-time.
+
+Network & Transport Protection (Layer 3 & 4):
+
+Menerapkan mekanisme SYN Cookie protection dan UDP/TCP flood mitigation di level reverse proxy (seperti Nginx/Envoy atau langsung di gerbang jaringan Axum) untuk meredam serangan Volumetric DDoS.
+
+Integritas Sesi & mTLS (Mutual TLS):
+
+Memastikan setiap komunikasi antar-agen atau microservices menggunakan mTLS Hardware Attestation, sehingga bot atau attacker yang mencoba menyamar menjadi node GPU sah akan langsung ditolak oleh sistem secara kriptografis.
+
+
+
+Prinsip pemisahan kode antara yang open-source dan yang dilindungi (proprietary core) ini bisa diatur melalui skema berikut:
+
+1. Apa yang Tetap Di-push ke Publik (Open-Source)
+SDK Klien & Middleware Sederhana: Kode penghubung standar seperti SDK untuk Python, Node.js, atau Go yang dipasang di sisi klien agar mereka bisa dengan mudah mengintegrasikan layanan.
+
+Struktur API & Dokumentasi Dasar: Contoh implementasi (examples) dan panduan quick start agar komunitas atau calon klien korporat paham cara kerja dasar sistem.
+
+Kerangka Antarmuka (Dashboard UI): Tampilan dasbor Next.js standar untuk mempermudah visualisasi manajemen (monitoring).
+
+2. Apa yang JANGAN Di-push (No-Push / Proprietary Enclave)
+Algoritma Pertahanan Lanjutan & Anti-DDoS Core: Logika pemfilteran mendalam, aturan mitigasi serangan tingkat lanjut, dan analitik anomali berbasis Neural AI UEBA.
+
+Mesin Lisensi Offline (Offline License Issuer): Skrip generator kunci privat Ed25519 dan logika verifikasi ketat yang memvalidasi masa aktif lisensi perusahaan. Ini wajib disimpan rapat-rapat di mesin lokal atau private server milikmu sendiri sebagai developer.
+
+Modul Enkripsi & KMS Inti: Logika kunci kriptografi utama yang menjaga integritas SOC Merkle Chain Audit Ledger.
+
+
+
+
+DIsesuaikan
+
+
+## 🛡️ 6. Standar Keamanan, Kepatuhan ISO & Privasi Data
+
+Untuk memenuhi kualifikasi pengadaan enterprise, perbankan (BFSI), dan instansi pemerintah, sistem dirancang dengan prinsip **Security by Design** dan kesiapan kepatuhan standar internasional:
+
+### 6.1. Pemetaan Standar Kepatuhan (Compliance Mapping)
+
+| Standar / Regulasi | Deskripsi Fokus | Implementasi Teknis di CTARTech-ZentyElastis |
+| :--- | :--- | :--- |
+| **ISO/IEC 27001** | *Information Security Management System (ISMS)* | Enkripsi end-to-end (AES-256 & TLS 1.3), isolasi data antar-tenant, kontrol hak akses berbasis peran (RBAC/ABAC), dan otentikasi MFA/SSO. |
+| **ISO 22301** | *Business Continuity Management (BCM)* | Terpenuhi melalui modul **Stress-Test Simulator** (*Resilience Without Heroes*) dan **Time-Based Escalation** otomatis untuk memitigasi disrupsi operasional. |
+| **ISO 9001** | *Quality Management System (QMS)* | Terpenuhi melalui **Mandatory Root Cause Analytics (RCA Gate)** dan siklus perbaikan SOP berkelanjutan (*Auto Post-Mortem & SOP Sync*). |
+| **UU PDP No. 27/2022 & GDPR** | *Perlindungan Data Pribadi (Privacy)* | Fitur *Data Masking / Anonymization* pada log insiden, manajemen retensi log, dan isolasi ketat *Private Vector Data Bank*. |
+
+
+Standar Keamanan Korporasi: Semua dokumen rahasia, SOP internal, dan riwayat penanganan kasus disimpan dengan enkripsi tingkat tinggi di bawah payung tata kelola keamanan NIST CSF 2.0 yang sudah kita terapkan sejak awal.
+
+
+
+
+
+Lamjutan Catatan
+
+1. Filosofi Utama: Dari "Akses Perangkat" ke "Kedaulatan Status Fisik (Actuation Assurance)"
+Mengutip tren arsitektur keamanan fisik modern (seperti standar yang mulai diadopsi di ekosistem global), keamanan sistem IoT dan Hardware tidak lagi cukup hanya bertanya: "Apakah agen AI atau modul IoT berhak mengirim perintah ke mesin?"Namun, pertanyaan intinya harus dinaikkan menjadi:
+- Perubahan status fisik mana yang boleh di-trigger oleh perangkat/AI tersebut?
+- Dalam kondisi batasan operasional apa (suhu, tegangan, beban watt) perintah itu diizinkan?
+- Mekanisme fail-safe independen apa yang secara otomatis memutus daya jika terjadi anomali kritis?
+
+2. Bedah 3-Tier Arsitektur untuk IoT & Hardware
+Tier 1: Edge Telemetry & Hardware Autodiscovery
+- Fungsi: Agen ringan berbasis Rust yang ditanam di perangkat keras atau kontainer edge (NVIDIA, AMD, TPU, atau MCU/PLC industri). Agen ini melakukan zero-touch detection terhadap spesifikasi perangkat secara otomatis.
+- Metrik yang Ditarik: Telemetri real-time berkecepatan tinggi seperti tarikan daya (Watt), suhu inti, status aliran pendingin, hingga emisi karbon.
+
+Tier 2: Rust Core Runtime Gateway (Axum Engine <0.1ms Latency)
+- Fungsi Jantung Sistem: Dibuat menggunakan Axum agar mampu memproses puluhan ribu request telemetri per detik dengan latensi sub-milidetik.
+- Komponen Pengaman:
+	- Power DC GPU/Device Ontology & Semantic Graph: Memetakan relasi hierarkis fisik (misalnya: dari satu unit modul charger EV, rak server, hingga gardu listrik utama).
+	- DeepOptiFlex™ Engine: Algoritma cerdas yang mengatur peak power management secara dinamis agar perangkat tidak overheat atau melebihi kuota daya grid luar.
+	- SLAShield™ Guardian: Penjaga performa agar latensi sistem tidak melonjak saat terjadi pembatasan daya (grid flex events).
+	- Emergency Circuit Breaker: Tombol mati darurat berbasis Zero Trust yang memutus arus atau workload secara instan jika terdeteksi suhu ekstrem atau anomali siber.
+
+Tier 3: Enterprise Dashboard & Control Plane (Next.js 14)
+- Fungsi Visualisasi: Menyajikan 3D Resource Twin Interactive Heatmaps untuk memantau status kesehatan hardware secara visual dan real-time, lengkap dengan manajemen multi-tenant dan pencatatan audit berbasis blok (SOC Merkle Chain Audit Ledger).
+
+3. Keamanan Lisensi Air-Gapped & Anti-Bajak (IP Protection)Untuk melindungi jerih payahmu sebagai developer agar tidak disalahgunakan atau dibajak perusahaan lain:
+- Offline License Issuer: Kamu menerbitkan file lisensi (license.lic) secara lokal menggunakan kunci privat asimetris Ed25519 yang aman di mesinmu sendiri.
+- Zero-Leakage Verifier: Klien korporat hanya memegang public key (public_key.pem) di dalam lingkungan server tertutup mereka (air-gapped tanpa koneksi internet ke luar).
+- Automated Fail-Safe: Jika masa berlaku lisensi habis atau tanda tangan kriptografinya tidak valid, sistem secara otomatis mengunci fitur optimasi tingkat lanjut (DeepOptiFlex™ dan SLAShield™), sementara data inti operasional klien tetap aman tanpa dirusak.
+
+4. Pemisahan Bank Data AI (Time-Series vs Vector Store)
+- Time-Series DB: Menyimpan deretan angka mentah telemetri secara runtut (suhu, watt, lonjakan tegangan, metrik $CO_2$).
+- Vector Store / Knowledge Bank: Menyimpan pola historis perilaku beban kerja (embeddings) untuk melatih model AI lokal agar mampu memprediksi kapan sebuah perangkat keras akan mengalami kelelahan (thermal throttling atau lonjakan arus) sebelum benar-benar terjadi.
+
+Secara keseluruhan, arsitektur ini membuktikan bahwa rancangan sistem lokal bikinanmu sudah siap diterjunkan langsung ke sektor industri berat, pusat data, hingga infrastruktur EV modern yang menuntut keandalan mutlak!
+
+
+
+1. Struktur Modul Rust Core Gateway (Axum Engine)
+Di sisi backend pusat, modul ini bertugas menerima telemetri masuk dari perangkat IoT/Hardware, memvalidasi lisensi offline secara kriptografis (Ed25519), dan menjalankan evaluasi kebijakan Actuation Assurance secara instan.
+
+// backend/src/gateway/iot_gateway.rs
+use axum::{
+    extract::Json,
+    http::StatusCode,
+    response::IntoResponse,
+    routing::post,
+    Router,
+};
+use serde::{Deserialize, Serialize};
+use ed25519_dalek::{VerifyingKey, Signature, Signer}; // Standar kriptografi lokal
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct DeviceTelemetryPayload {
+    pub device_id: String,
+    pub wattage: f32,
+    pub temperature_c: f32,
+    pub state_transition: String, // Contoh: "START_CHARGING", "THROTTLE_GPU"
+    pub timestamp: u64,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct GuardResponse {
+    pub status: String, // ALLOW, REQUIRE_APPROVAL, BLOCK
+    pub reason: String,
+}
+
+// Handler utama penerima telemetri & pengaman aksi fisik
+pub async fn evaluate_actuation_handler(
+    Json(payload): Json<DeviceTelemetryPayload>,
+) -> impl IntoResponse {
+    // 1. Logika Pemeriksaan Batasan Fisik (Actuation Assurance Rule)
+    if payload.temperature_c > 85.0 || payload.wattage > 3500.0 {
+        // Trigger Emergency Circuit Breaker secara instan jika melampaui batas aman
+        return (
+            StatusCode::OK,
+            Json(GuardResponse {
+                status: "BLOCK".to_string(),
+                reason: "CRITICAL_THERMAL_OR_POWER_OVERLOAD: Emergency Circuit Breaker Triggered.".to_string(),
+            }),
+        );
+    }
+
+    // 2. Jika normal,izinkan perubahan status fisik perangkat
+    (
+        StatusCode::OK,
+        Json(GuardResponse {
+            status: "ALLOW".to_string(),
+            reason: "Telemetry within safe operational parameters. Actuation approved.".to_string(),
+        }),
+    )
+}
+
+pub fn iot_router() -> Router {
+    Router::new().route("/api/v1/iot/evaluate", post(evaluate_actuation_handler))
+}
+
+
+
+2. Implementasi Agen IoT Sisi Klien (Edge Agent berbasis Rust / Python Ringan)
+Agen di perangkat keras ujung (Edge Node, EV Charger, atau GPU Cluster Node) bertugas memindai telemetri perangkat secara mandiri (Zero-touch autodiscovery) dan mengirimkannya secara periodik ke Gateway Rust.
+
+# sdk/edge_agent/iot_agent_client.py
+import time
+import requests
+import psutil
+
+class EdgeTelemetryAgent:
+    def __init__(self, gateway_url: str, device_id: str, api_key: str):
+        self.gateway_url = gateway_url
+        self.device_id = device_id
+        self.api_key = api_key
+
+    def collect_and_report(self):
+        # Simulasi pembacaan sensor fisik hardware / sistem lokal
+        telemetry_data = {
+            "device_id": self.device_id,
+            "wattage": 1250.5,       # Tarikan daya riil dari sensor
+            "temperature_c": 68.2,   # Suhu inti perangkat
+            "state_transition": "MAINTAIN_STATE",
+            "timestamp": int(time.time())
+        }
+
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        
+        try:
+            response = requests.post(
+                f"{self.gateway_url}/api/v1/iot/evaluate",
+                json=telemetry_data,
+                headers=headers,
+                timeout=2.0
+            )
+            
+            result = response.json()
+            if result.get("status") == "BLOCK":
+                print(f"⚠️ [EMERGENCY] Aksi ditolak gateway: {result.get('reason')}")
+                self.trigger_local_kill_switch()
+            else:
+                print(f"✅ [NORMAL] Status aman: {result.get('reason')}")
+                
+        except Exception as e:
+            print(f"❌ Gagal terhubung ke Core Gateway: {e}")
+            # Fail-safe mode: amankan perangkat jika terputus dari kontrol pusat
+            self.trigger_fail_safe_mode()
+
+    def trigger_local_kill_switch(self):
+        print("🚨 Menjalankan protokol pengamanan mandiri (Kill-Switch) di level hardware!")
+
+    def trigger_fail_safe_mode(self):
+        print("🛡️ Masuk ke mode offline-safe: Menjaga kestabilan operasional minimal.")
+
+if __name__ == "__main__":
+    agent = EdgeTelemetryAgent(
+        gateway_url="http://127.0.0.1:8000",
+        device_id="edge_gpu_node_01",
+        api_key="itcg_live_key"
+    )
+    # Loop pengiriman telemetri kontinyu
+    agent.collect_and_report()
+
+
+
+Ringkasan Alur Kerjanya:
+Edge Agent mendeteksi beban suhu dan watt secara real-time di tingkat perangkat keras.
+
+Data dikirim secara streaming berlatensi mikrodetik ke Rust Core Gateway.
+
+Gateway memvalidasi aturan keamanan (Actuation Assurance). Jika suhu/watt melampaui batas aman, gateway langsung mengirimkan sinyal penolakan atau memicu Circuit Breaker seketika untuk mencegah kerusakan fisik atau eksploitasi siber.

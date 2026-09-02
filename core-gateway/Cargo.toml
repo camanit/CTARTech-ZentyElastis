@@ -1,0 +1,19 @@
+[package]
+name = "core-gateway"
+version = "0.1.0"
+edition = "2021"
+authors = ["CTARTech Team <dev@ctar.tech>"]
+description = "CTARTech-ZentyElastis: Ultra Low-Latency (<0.1ms) GPU Power & Telemetry Core Gateway"
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+ed25519-dalek = { version = "2.1", features = ["default", "pkcs8"] }
+base64 = "0.22"
+chrono = { version = "0.4", features = ["serde"] }
