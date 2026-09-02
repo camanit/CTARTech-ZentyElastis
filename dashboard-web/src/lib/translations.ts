@@ -53,19 +53,43 @@ export const translations = {
     price_tag: "Open-Core Licensing Model",
     price_title: "Licensing Tiers & Enterprise Procurement",
     price_desc: "Select the edition tailored to your AI data center scale. From open-source research to sovereign banking infrastructure.",
+    
+    // Community
     tier_comm: "Community Edition",
     tier_comm_price: "Free",
     tier_comm_unit: "/ Open-Source",
     tier_comm_desc: "Free for research, GPU development labs, and independent developers.",
+    tier_comm_b1: "Up to 8 GPU Nodes",
+    tier_comm_b2: "Edge Telemetry Agent (NVML/ROCm)",
+    tier_comm_b3: "Rust Core Gateway <0.1ms",
+    tier_comm_b4: "Basic Emergency Circuit Breaker",
+    tier_comm_btn: "Download via GitHub (v0.1)",
+    
+    // Enterprise
     tier_ent: "Enterprise Edition",
     tier_ent_popular: "Most Popular",
     tier_ent_price: "Contact Us",
     tier_ent_unit: "/ Cluster Node",
     tier_ent_desc: "For GPU cloud providers, AI hyper-growth scaleups, and private data centers.",
+    tier_ent_b1: "Unlimited GPU Nodes",
+    tier_ent_b2: "DeepOptiFlex™ Predictive Shaving (-18.5%)",
+    tier_ent_b3: "SLAShield™ Guarantee Guard",
+    tier_ent_b4: "SOC Merkle Chain Audit Ledger (ISO 14064-1)",
+    tier_ent_b5: "gplay.ctar.tech Sync Integration",
+    tier_ent_b6: "24/7 Enterprise SLA Support",
+    tier_ent_btn: "Request Enterprise License",
+    
+    // Sovereign
     tier_sov: "Sovereign Air-Gapped",
     tier_sov_price: "Custom PoC",
     tier_sov_unit: "/ On-Premise",
     tier_sov_desc: "For banking, state-owned enterprises, defense, and government institutions.",
+    tier_sov_b1: "100% Offline Air-Gapped Deployment",
+    tier_sov_b2: "Ed25519 Custom Key Authority",
+    tier_sov_b3: "PDP Act & ISO 27001 Compliance Audit",
+    tier_sov_b4: "Dedicated Source Code Escrow",
+    tier_sov_btn: "Schedule PoC / Pilot Run",
+    
     contact_tag: "Official Contact & License Procurement",
     contact_title: "PT CTAR Technology Indonesia",
     contact_desc: "For corporate enterprise licenses, PoC / pilot deployment requests, data center consulting, or compute billing deposits:",
@@ -76,7 +100,9 @@ export const translations = {
     contact_eco_gplay: "Central AI Data Gateway & Vector Knowledge",
     contact_eco_ctar: "Parent Sovereign Technology Portal",
     footer_copy: "© 2026 PT CTAR Technology Indonesia. All Rights Reserved.",
-    footer_sub: "CTARTech-ZentyElastis™ is a registered trademark. Compliant with ISO 14064-1, GHG Protocol Scope 2, and Personal Data Protection Act No. 27/2022."
+    footer_sub: "CTARTech-ZentyElastis™ is a registered trademark. Compliant with ISO 14064-1, GHG Protocol Scope 2, and Personal Data Protection Act No. 27/2022.",
+    footer_terms: "Terms of Service",
+    footer_privacy: "Privacy Policy"
   },
   id: {
     top_announcement: "Rilis Resmi V0.1 Aktif: Sub-Millisecond Rust Axum Core & DeepOptiFlex™ Predictive Peak Shaving.",
@@ -130,19 +156,43 @@ export const translations = {
     price_tag: "Model Lisensi Terbuka (Open-Core)",
     price_title: "Skema Lisensi & Pengadaan Korporasi",
     price_desc: "Pilih edisi yang sesuai dengan skala pusat data AI Anda. Dari riset open-source hingga komputasi perbankan berlisensi sovereign.",
+    
+    // Community
     tier_comm: "Community Edition",
     tier_comm_price: "Gratis",
     tier_comm_unit: "/ Open-Source",
     tier_comm_desc: "Bebas digunakan untuk riset, lab GPU, dan pengembang independen.",
+    tier_comm_b1: "Hingga 8 GPU Node",
+    tier_comm_b2: "Edge Telemetry Agent (NVML/ROCm)",
+    tier_comm_b3: "Rust Core Gateway <0.1ms",
+    tier_comm_b4: "Emergency Circuit Breaker Dasar",
+    tier_comm_btn: "Unduh via GitHub (v0.1)",
+    
+    // Enterprise
     tier_ent: "Enterprise Edition",
     tier_ent_popular: "Paling Banyak Digunakan",
     tier_ent_price: "Hubungi Kami",
     tier_ent_unit: "/ Node Kluster",
     tier_ent_desc: "Untuk penyedia cloud GPU, AI startup skala besar, dan data center swasta.",
+    tier_ent_b1: "Node GPU Tanpa Batas",
+    tier_ent_b2: "DeepOptiFlex™ Predictive Shaving (-18.5%)",
+    tier_ent_b3: "SLAShield™ Guarantee Guard",
+    tier_ent_b4: "SOC Merkle Chain Audit Ledger (ISO 14064-1)",
+    tier_ent_b5: "Integrasi Sinkronisasi gplay.ctar.tech",
+    tier_ent_b6: "Dukungan SLA Teknis 24/7",
+    tier_ent_btn: "Ajukan Lisensi Enterprise",
+    
+    // Sovereign
     tier_sov: "Sovereign Air-Gapped",
     tier_sov_price: "Custom PoC",
     tier_sov_unit: "/ On-Premise",
     tier_sov_desc: "Untuk sektor perbankan, BUMN, pertahanan, dan institusi pemerintahan.",
+    tier_sov_b1: "100% Offline Air-Gapped Deployment",
+    tier_sov_b2: "Ed25519 Custom Key Authority",
+    tier_sov_b3: "Audit Kepatuhan UU PDP No. 27/2022",
+    tier_sov_b4: "Dedicated Source Code Escrow",
+    tier_sov_btn: "Jadwalkan PoC / Pilot Run",
+    
     contact_tag: "Kontak Resmi & Pembayaran Lisensi",
     contact_title: "PT CTAR Technology Indonesia",
     contact_desc: "Untuk pengadaan lisensi korporat (Enterprise License), permohonan PoC / Pilot Deployment, konsultasi teknis data center, atau deposit billing komputasi:",
@@ -153,6 +203,8 @@ export const translations = {
     contact_eco_gplay: "Central AI Data Gateway & Vector Knowledge",
     contact_eco_ctar: "Portal Induk Inovasi Teknologi Indonesia",
     footer_copy: "© 2026 PT CTAR Technology Indonesia. Seluruh Hak Cipta Dilindungi Undang-Undang.",
-    footer_sub: "CTARTech-ZentyElastis™ adalah merek dagang terdaftar. Memenuhi kepatuhan ISO 14064-1, GHG Protocol Scope 2, dan UU PDP No. 27/2022."
+    footer_sub: "CTARTech-ZentyElastis™ adalah merek dagang terdaftar. Memenuhi kepatuhan ISO 14064-1, GHG Protocol Scope 2, dan UU PDP No. 27/2022.",
+    footer_terms: "Syarat & Ketentuan Layanan",
+    footer_privacy: "Kebijakan Privasi"
   }
 };

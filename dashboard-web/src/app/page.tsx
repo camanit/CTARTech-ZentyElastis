@@ -435,10 +435,10 @@ export default function HomePage() {
                 </div>
                 <p className="mt-3 text-xs text-slate-400">{t.tier_comm_desc}</p>
                 <ul className="mt-6 space-y-3 text-xs text-slate-300">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> Hingga 8 GPU Node</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> Edge Telemetry Agent (NVML/ROCm)</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> Rust Core Gateway &lt;0.1ms</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> Emergency Circuit Breaker Dasar</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> {t.tier_comm_b1}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> {t.tier_comm_b2}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> {t.tier_comm_b3}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> {t.tier_comm_b4}</li>
                 </ul>
               </div>
               <a
@@ -446,7 +446,7 @@ export default function HomePage() {
                 target="_blank"
                 className="mt-8 block w-full rounded-xl border border-white/20 bg-white/5 py-3 text-center text-xs font-semibold text-white hover:bg-white/10 transition-colors"
               >
-                Unduh via GitHub (v0.1)
+                {t.tier_comm_btn}
               </a>
             </div>
 
@@ -463,12 +463,12 @@ export default function HomePage() {
                 </div>
                 <p className="mt-3 text-xs text-slate-400">{t.tier_ent_desc}</p>
                 <ul className="mt-6 space-y-3 text-xs text-slate-200">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>Node GPU Tanpa Batas</strong></li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>DeepOptiFlex™ Predictive Shaving</strong> (-18.5%)</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>SLAShield™ Guarantee Guard</strong></li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>SOC Merkle Chain Audit Ledger</strong> (ISO 14064-1)</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> Integrasi Sinkronisasi <strong>gplay.ctar.tech</strong></li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> Dukungan SLA Teknis 24/7</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>{t.tier_ent_b1}</strong></li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>{t.tier_ent_b2}</strong></li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>{t.tier_ent_b3}</strong></li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>{t.tier_ent_b4}</strong></li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> {t.tier_ent_b5}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> {t.tier_ent_b6}</li>
                 </ul>
               </div>
               <a
@@ -476,7 +476,7 @@ export default function HomePage() {
                 target="_blank"
                 className="mt-8 block w-full rounded-xl bg-cyan-500 py-3 text-center text-xs font-bold text-black hover:bg-cyan-400 shadow-neon transition-all"
               >
-                Ajukan Lisensi Enterprise
+                {t.tier_ent_btn}
               </a>
             </div>
 
@@ -490,10 +490,10 @@ export default function HomePage() {
                 </div>
                 <p className="mt-3 text-xs text-slate-400">{t.tier_sov_desc}</p>
                 <ul className="mt-6 space-y-3 text-xs text-slate-300">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> 100% Offline Air-Gapped Deployment</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> Ed25519 Custom Key Authority</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> Audit Kepatuhan UU PDP No. 27/2022</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> Dedicated Source Code Escrow</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> {t.tier_sov_b1}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> {t.tier_sov_b2}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> {t.tier_sov_b3}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> {t.tier_sov_b4}</li>
                 </ul>
               </div>
               <a
@@ -501,7 +501,7 @@ export default function HomePage() {
                 target="_blank"
                 className="mt-8 block w-full rounded-xl border border-purple-500/40 bg-purple-950/40 py-3 text-center text-xs font-semibold text-purple-300 hover:bg-purple-900/50 transition-colors"
               >
-                Jadwalkan PoC / Pilot Run
+                {t.tier_sov_btn}
               </a>
             </div>
           </div>
@@ -594,6 +594,11 @@ export default function HomePage() {
         <p className="mt-2 text-[11px] text-slate-600">
           {t.footer_sub}
         </p>
+        <div className="mt-4 flex items-center justify-center gap-6 text-xs text-slate-400">
+          <a href="/terms" className="hover:text-cyan-400 underline transition-colors">{t.footer_terms}</a>
+          <span>•</span>
+          <a href="/privacy" className="hover:text-cyan-400 underline transition-colors">{t.footer_privacy}</a>
+        </div>
       </footer>
     </div>
   );
