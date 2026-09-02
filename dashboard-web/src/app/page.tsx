@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Zap,
   Shield,
@@ -19,10 +19,16 @@ import {
   Building,
   Terminal,
   RefreshCw,
-  Power
+  Power,
+  Globe
 } from "lucide-react";
+import { translations, Language } from "@/lib/translations";
 
 export default function HomePage() {
+  // Default Bahasa: English (EN) sesuai permintaan pengguna, dengan opsi ID lokal
+  const [lang, setLang] = useState<Language>("en");
+  const t = translations[lang];
+
   // Simulator State untuk interaktivitas pengguna di Landing Page
   const [powerLoad, setPowerLoad] = useState(1920);
   const [isBreakerTripped, setIsBreakerTripped] = useState(false);
@@ -35,13 +41,13 @@ export default function HomePage() {
   const carbonRate = ((powerLoad * 1.15 * 0.432) / 2.0).toFixed(1);
 
   // Status SLAShield
-  let slaStatus = "OPTIMAL";
+  let slaStatus = lang === "en" ? "OPTIMAL" : "OPTIMAL";
   let slaColor = "text-emerald-400 bg-emerald-950/60 border-emerald-500/30";
   if (tps < 120) {
-    slaStatus = "RESCUE ACTIVE";
+    slaStatus = lang === "en" ? "RESCUE ACTIVE" : "RESCUE AKTIF";
     slaColor = "text-rose-400 bg-rose-950/60 border-rose-500/30";
   } else if (tps < 140) {
-    slaStatus = "BUFFER ZONE";
+    slaStatus = lang === "en" ? "BUFFER ZONE" : "ZONA BUFFER";
     slaColor = "text-amber-400 bg-amber-950/60 border-amber-500/30";
   }
 
@@ -71,8 +77,8 @@ export default function HomePage() {
     <div className="min-h-screen text-slate-100 selection:bg-cyan-500 selection:text-black">
       {/* 1. TOP ANNOUNCEMENT BAR */}
       <div className="border-b border-cyan-500/20 bg-cyan-950/40 px-4 py-2 text-center text-xs text-cyan-300 backdrop-blur-md">
-        <span>🚀 <strong>Rilis Resmi V0.1 Aktif:</strong> Sub-Millisecond Rust Axum Core & DeepOptiFlex™ Predictive Peak Shaving.</span>
-        <a href="#demo" className="ml-2 font-semibold underline hover:text-white">Coba Demo Interaktif &rarr;</a>
+        <span>🚀 <strong>{t.top_announcement}</strong></span>
+        <a href="#demo" className="ml-2 font-semibold underline hover:text-white">{t.try_demo}</a>
       </div>
 
       {/* 2. NAVBAR */}
@@ -89,11 +95,11 @@ export default function HomePage() {
           </div>
 
           <div className="hidden md:flex items-center gap-6 text-sm text-slate-300">
-            <a href="#arsitektur" className="hover:text-cyan-400 transition-colors">Arsitektur</a>
-            <a href="#deepoptiflex" className="hover:text-cyan-400 transition-colors">DeepOptiFlex™</a>
-            <a href="#slashield" className="hover:text-cyan-400 transition-colors">SLAShield™</a>
-            <a href="#merkle-esg" className="hover:text-cyan-400 transition-colors">Audit ESG</a>
-            <a href="#pricing" className="hover:text-cyan-400 transition-colors">Lisensi</a>
+            <a href="#arsitektur" className="hover:text-cyan-400 transition-colors">{t.nav_architecture}</a>
+            <a href="#deepoptiflex" className="hover:text-cyan-400 transition-colors">{t.nav_deepoptiflex}</a>
+            <a href="#slashield" className="hover:text-cyan-400 transition-colors">{t.nav_slashield}</a>
+            <a href="#merkle-esg" className="hover:text-cyan-400 transition-colors">{t.nav_esg}</a>
+            <a href="#pricing" className="hover:text-cyan-400 transition-colors">{t.nav_pricing}</a>
             <a href="https://gplay.ctar.tech" target="_blank" className="flex items-center gap-1 text-purple-400 hover:text-purple-300 transition-colors">
               <span>GPlay AI</span>
               <ExternalLink className="h-3 w-3" />
@@ -101,13 +107,33 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Language Switcher Pill (EN Default | ID Local) */}
+            <div className="flex items-center rounded-xl border border-white/10 bg-white/5 p-1 text-xs">
+              <button
+                onClick={() => setLang("en")}
+                className={`flex items-center gap-1 rounded-lg px-2.5 py-1 font-bold transition-all ${
+                  lang === "en" ? "bg-cyan-500 text-black shadow-neon" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <span>EN</span>
+              </button>
+              <button
+                onClick={() => setLang("id")}
+                className={`flex items-center gap-1 rounded-lg px-2.5 py-1 font-bold transition-all ${
+                  lang === "id" ? "bg-cyan-500 text-black shadow-neon" : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <span>ID</span>
+              </button>
+            </div>
+
             <a
               href="https://wa.me/6281260006666?text=Halo%20CTARTech,%20saya%20tertarik%20dengan%20solusi%20Enterprise%20ZentyElastis"
               target="_blank"
               className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 px-4 py-2 text-xs font-semibold text-black shadow-neon transition-all hover:scale-105"
             >
               <MessageSquare className="h-4 w-4" />
-              <span>Hubungi Enterprise</span>
+              <span>{t.nav_contact}</span>
             </a>
           </div>
         </div>
@@ -118,18 +144,16 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/50 px-4 py-1.5 text-xs text-cyan-300 shadow-neon">
             <Zap className="h-3.5 w-3.5 animate-pulse text-cyan-400" />
-            <span>Rust Axum Core Latency: &lt;0.1ms | Zero-Trust Hardware Harness</span>
+            <span>{t.hero_badge}</span>
           </div>
 
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl sm:leading-tight">
-            Optimasi Daya & Pelindung Latensi{" "}
-            <span className="gradient-text">Pusat Data AI Generasi Baru</span>
+            {t.hero_title_1}{" "}
+            <span className="gradient-text">{t.hero_title_2}</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg text-slate-300 leading-relaxed">
-            Platform telemetri otonom dan digital twin pertama untuk kluster GPU AI skala besar (NVIDIA H100 / A100 / Blackwell). 
-            Dilengkapi mesin prediktif <strong>DeepOptiFlex™</strong> untuk pemotongan lonjakan daya listrik hingga <strong>-18.5%</strong>, 
-            penjaga SLA inferensi <strong>SLAShield™</strong>, serta sertifikasi kepatuhan karbon <strong>SOC Merkle Chain Audit Ledger</strong>.
+            {t.hero_desc}
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -138,14 +162,14 @@ export default function HomePage() {
               className="flex items-center gap-2 rounded-xl bg-cyan-500 px-6 py-3.5 text-sm font-bold text-black shadow-neon transition-all hover:bg-cyan-400 hover:scale-105"
             >
               <Activity className="h-4 w-4" />
-              <span>Buka Live Telemetry Simulator</span>
+              <span>{t.btn_simulator}</span>
             </a>
             <a
               href="#pricing"
               className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/10 hover:border-cyan-400"
             >
               <Shield className="h-4 w-4 text-emerald-400" />
-              <span>Tinjau Skema Lisensi Enterprise</span>
+              <span>{t.btn_pricing}</span>
             </a>
           </div>
 
@@ -153,19 +177,19 @@ export default function HomePage() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              <span>Zero-Trust HMAC-SHA256</span>
+              <span>{t.badge_zero_trust}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              <span>Offline Air-Gapped Ed25519</span>
+              <span>{t.badge_airgap}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              <span>ISO 14064-1 & GHG Protocol</span>
+              <span>{t.badge_iso}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              <span>&lt;5ms Emergency Hardware Kill-Switch</span>
+              <span>{t.badge_killswitch}</span>
             </div>
           </div>
         </div>
@@ -178,7 +202,7 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
               <div className="flex items-center gap-3">
                 <div className="h-3 w-3 rounded-full bg-emerald-400 animate-ping" />
-                <h3 className="text-xl font-bold text-white">Live Resource Twin Simulator (Edge-to-Core)</h3>
+                <h3 className="text-xl font-bold text-white">{t.sim_title}</h3>
               </div>
               <div className="flex items-center gap-2">
                 <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-mono font-semibold ${slaColor}`}>
@@ -194,27 +218,27 @@ export default function HomePage() {
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {/* Power */}
               <div className="glass-card rounded-2xl p-5">
-                <span className="text-xs uppercase text-slate-400">Cluster Total Power</span>
+                <span className="text-xs uppercase text-slate-400">{t.sim_power_label}</span>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-3xl font-mono font-extrabold text-amber-400">{isBreakerTripped ? 0 : powerLoad.toFixed(1)}</span>
                   <span className="text-xs text-slate-400">Watt</span>
                 </div>
                 <div className="mt-3 flex justify-between text-xs">
-                  <span className="text-emerald-400 font-semibold">Peak Shave: -18.5%</span>
+                  <span className="text-emerald-400 font-semibold">{t.sim_peak_shave}</span>
                   <span className="text-slate-400">Cap: {isBreakerTripped ? 0 : powerCap}W</span>
                 </div>
               </div>
 
               {/* Temp */}
               <div className="glass-card rounded-2xl p-5">
-                <span className="text-xs uppercase text-slate-400">GPU Junction Temp</span>
+                <span className="text-xs uppercase text-slate-400">{t.sim_temp_label}</span>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-3xl font-mono font-extrabold text-rose-400">{isBreakerTripped ? 28 : temp}</span>
                   <span className="text-xs text-slate-400">°C</span>
                 </div>
                 <div className="mt-3 flex justify-between text-xs">
                   <span className={temp > 78 ? "text-rose-400 font-bold" : "text-emerald-400"}>
-                    {temp > 78 ? "⚠️ Preemptive Zone" : "● Safe Envelope"}
+                    {temp > 78 ? t.sim_temp_preempt : t.sim_temp_safe}
                   </span>
                   <span className="text-slate-400">Trip: 85.0°C</span>
                 </div>
@@ -222,7 +246,7 @@ export default function HomePage() {
 
               {/* AI Efficiency */}
               <div className="glass-card rounded-2xl p-5">
-                <span className="text-xs uppercase text-slate-400">Energy Per Token</span>
+                <span className="text-xs uppercase text-slate-400">{t.sim_energy_label}</span>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-3xl font-mono font-extrabold text-cyan-400">{isBreakerTripped ? 0 : joulesPerToken}</span>
                   <span className="text-xs text-slate-400">J/Tok</span>
@@ -235,13 +259,13 @@ export default function HomePage() {
 
               {/* Carbon */}
               <div className="glass-card rounded-2xl p-5">
-                <span className="text-xs uppercase text-slate-400">Carbon Rate (ESG)</span>
+                <span className="text-xs uppercase text-slate-400">{t.sim_carbon_label}</span>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-3xl font-mono font-extrabold text-emerald-400">{isBreakerTripped ? 0 : carbonRate}</span>
                   <span className="text-xs text-slate-400">gCO₂/h</span>
                 </div>
                 <div className="mt-3 flex justify-between text-xs">
-                  <span className="text-emerald-400 font-semibold">PUE: 1.15 Target</span>
+                  <span className="text-emerald-400 font-semibold">{t.sim_pue}</span>
                   <span className="text-slate-400">ISO 14064-1</span>
                 </div>
               </div>
@@ -251,7 +275,7 @@ export default function HomePage() {
             <div className="mt-8 rounded-2xl bg-black/40 p-6 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="w-full md:w-1/2">
                 <div className="flex justify-between text-xs font-mono text-slate-300 mb-2">
-                  <span>Simulasi Beban GPU (Watts):</span>
+                  <span>{t.sim_power_slider}</span>
                   <strong className="text-cyan-400">{powerLoad} Watt</strong>
                 </div>
                 <input
@@ -268,7 +292,7 @@ export default function HomePage() {
 
               <div className="w-full md:w-1/3">
                 <div className="flex justify-between text-xs font-mono text-slate-300 mb-2">
-                  <span>Throughput Inferensi (TPS):</span>
+                  <span>{t.sim_tps_slider}</span>
                   <strong className="text-purple-400">{tps} TPS</strong>
                 </div>
                 <input
@@ -293,7 +317,7 @@ export default function HomePage() {
                   }`}
                 >
                   <Power className="h-4 w-4" />
-                  <span>{isBreakerTripped ? "RESET CIRCUIT BREAKER" : "TRIGGER KILL-SWITCH"}</span>
+                  <span>{isBreakerTripped ? t.sim_reset_btn : t.sim_kill_btn}</span>
                 </button>
               </div>
             </div>
@@ -301,7 +325,7 @@ export default function HomePage() {
             {/* Merkle Certificate Action */}
             <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
               <div className="text-xs text-slate-400 font-mono">
-                <span>Merkle Root: </span>
+                <span>{t.sim_merkle_root} </span>
                 <span className="text-cyan-300">e3b0c44298fc1c149afbf4c8...3b1c</span> (SHA-256 Tamper-Proof Chain)
               </div>
               <button
@@ -309,7 +333,7 @@ export default function HomePage() {
                 className="flex items-center gap-2 rounded-xl bg-emerald-600/30 border border-emerald-500/40 px-4 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-600/50 transition-colors"
               >
                 <Download className="h-4 w-4" />
-                <span>Unduh Sertifikat Kepatuhan ESG (.JSON)</span>
+                <span>{t.sim_download_cert}</span>
               </button>
             </div>
           </div>
@@ -320,12 +344,12 @@ export default function HomePage() {
       <section id="arsitektur" className="px-6 py-20 bg-slate-950/60 border-t border-white/5">
         <div className="mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">Infrastruktur Standar Militer & Perbankan</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">{t.arch_tag}</span>
             <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
-              6 Pilar Teknologi Otonom ZentyElastis™
+              {t.arch_title}
             </h2>
             <p className="mt-4 text-slate-400 text-sm leading-relaxed">
-              Didesain khusus untuk beban kerja komputasi AI intensif, data center sovereign, dan kluster GPU hyperscaler tanpa kompromi performa.
+              {t.arch_desc}
             </p>
           </div>
 
@@ -335,10 +359,8 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-4">
                 <Zap className="h-5 w-5" />
               </div>
-              <h4 className="text-base font-bold text-white">Rust Axum Core Gateway</h4>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                Pemrosesan telemetri ingest dengan latensi sub-milidetik (&lt;0.1ms). Mampu menampung 50.000+ metrik/detik dengan konsumsi memori minimal (&lt;30MB RAM).
-              </p>
+              <h4 className="text-base font-bold text-white">{t.p1_title}</h4>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">{t.p1_desc}</p>
             </div>
 
             {/* 2 */}
@@ -346,10 +368,8 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
                 <Activity className="h-5 w-5" />
               </div>
-              <h4 className="text-base font-bold text-white">DeepOptiFlex™ Predictive Shaving</h4>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                Algoritma prediktif berbasis intelligence feed GPlay AI yang secara dinamis memangkas beban puncak daya listrik sebesar 15% - 25% tanpa mematikan proses inferensi.
-              </p>
+              <h4 className="text-base font-bold text-white">{t.p2_title}</h4>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">{t.p2_desc}</p>
             </div>
 
             {/* 3 */}
@@ -357,10 +377,8 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
                 <Shield className="h-5 w-5" />
               </div>
-              <h4 className="text-base font-bold text-white">SLAShield™ Guarantee Guard</h4>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                Penjaga Time-To-First-Token (TTFT) dan throughput TPS inferensi AI. Jika power capping mengancam SLA, sistem otomatis menaikkan kuota daya (+15% SLA Headroom Boost).
-              </p>
+              <h4 className="text-base font-bold text-white">{t.p3_title}</h4>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">{t.p3_desc}</p>
             </div>
 
             {/* 4 */}
@@ -368,10 +386,8 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
                 <Leaf className="h-5 w-5" />
               </div>
-              <h4 className="text-base font-bold text-white">SOC Merkle Chain Audit Ledger</h4>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                Buku besar audit hijau berbasis pohon kriptografi SHA-256. Setiap kilowatt-hour daya dan gram CO₂ yang dihemat tercatat tamper-proof sesuai ISO 14064-1 & GHG Protocol.
-              </p>
+              <h4 className="text-base font-bold text-white">{t.p4_title}</h4>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">{t.p4_desc}</p>
             </div>
 
             {/* 5 */}
@@ -379,10 +395,8 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
                 <Lock className="h-5 w-5" />
               </div>
-              <h4 className="text-base font-bold text-white">Offline Air-Gapped Ed25519</h4>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                Penegakan lisensi kriptografi asimetris 100% offline. Server di pusat data terisolasi (air-gapped) tidak perlu koneksi internet eksternal untuk verifikasi integritas.
-              </p>
+              <h4 className="text-base font-bold text-white">{t.p5_title}</h4>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">{t.p5_desc}</p>
             </div>
 
             {/* 6 */}
@@ -390,10 +404,8 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center mb-4">
                 <AlertTriangle className="h-5 w-5" />
               </div>
-              <h4 className="text-base font-bold text-white">Actuation Assurance &amp; Kill-Switch</h4>
-              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                Mekanisme pertahanan sirkuit darurat (&lt;5ms instant trip) dan self-healing engine otonom (Preemptive Workload Migration, VRAM zombie cache purge, dynamic cap pinning).
-              </p>
+              <h4 className="text-base font-bold text-white">{t.p6_title}</h4>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">{t.p6_desc}</p>
             </div>
           </div>
         </div>
@@ -403,12 +415,12 @@ export default function HomePage() {
       <section id="pricing" className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Model Lisensi Terbuka (Open-Core)</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">{t.price_tag}</span>
             <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
-              Skema Lisensi &amp; Pengadaan Korporasi
+              {t.price_title}
             </h2>
             <p className="mt-4 text-slate-400 text-sm leading-relaxed">
-              Pilih edisi yang sesuai dengan skala pusat data AI Anda. Dari riset open-source hingga komputasi perbankan berlisensi sovereign.
+              {t.price_desc}
             </p>
           </div>
 
@@ -416,12 +428,12 @@ export default function HomePage() {
             {/* Community */}
             <div className="glass-card rounded-3xl p-8 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-bold uppercase text-slate-400">Community Edition</span>
+                <span className="text-xs font-bold uppercase text-slate-400">{t.tier_comm}</span>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">Gratis</span>
-                  <span className="text-xs text-slate-400">/ Open-Source</span>
+                  <span className="text-4xl font-extrabold text-white">{t.tier_comm_price}</span>
+                  <span className="text-xs text-slate-400">{t.tier_comm_unit}</span>
                 </div>
-                <p className="mt-3 text-xs text-slate-400">Bebas digunakan untuk riset, lab GPU, dan pengembang independen.</p>
+                <p className="mt-3 text-xs text-slate-400">{t.tier_comm_desc}</p>
                 <ul className="mt-6 space-y-3 text-xs text-slate-300">
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> Hingga 8 GPU Node</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-400" /> Edge Telemetry Agent (NVML/ROCm)</li>
@@ -441,15 +453,15 @@ export default function HomePage() {
             {/* Enterprise */}
             <div className="glass-card rounded-3xl p-8 border-2 border-cyan-500 shadow-neon relative flex flex-col justify-between">
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 px-4 py-1 text-[11px] font-bold text-black uppercase tracking-wider">
-                Paling Banyak Digunakan
+                {t.tier_ent_popular}
               </div>
               <div>
-                <span className="text-xs font-bold uppercase text-cyan-400">Enterprise Edition</span>
+                <span className="text-xs font-bold uppercase text-cyan-400">{t.tier_ent}</span>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">Hubungi Kami</span>
-                  <span className="text-xs text-slate-400">/ Node Kluster</span>
+                  <span className="text-4xl font-extrabold text-white">{t.tier_ent_price}</span>
+                  <span className="text-xs text-slate-400">{t.tier_ent_unit}</span>
                 </div>
-                <p className="mt-3 text-xs text-slate-400">Untuk penyedia cloud GPU, AI startup skala besar, dan data center swasta.</p>
+                <p className="mt-3 text-xs text-slate-400">{t.tier_ent_desc}</p>
                 <ul className="mt-6 space-y-3 text-xs text-slate-200">
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>Node GPU Tanpa Batas</strong></li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-cyan-400" /> <strong>DeepOptiFlex™ Predictive Shaving</strong> (-18.5%)</li>
@@ -471,12 +483,12 @@ export default function HomePage() {
             {/* Sovereign Air-Gapped */}
             <div className="glass-card rounded-3xl p-8 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-bold uppercase text-purple-400">Sovereign Air-Gapped</span>
+                <span className="text-xs font-bold uppercase text-purple-400">{t.tier_sov}</span>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">Custom PoC</span>
-                  <span className="text-xs text-slate-400">/ On-Premise</span>
+                  <span className="text-4xl font-extrabold text-white">{t.tier_sov_price}</span>
+                  <span className="text-xs text-slate-400">{t.tier_sov_unit}</span>
                 </div>
-                <p className="mt-3 text-xs text-slate-400">Untuk sektor perbankan, BUMN, pertahanan, dan institusi pemerintahan.</p>
+                <p className="mt-3 text-xs text-slate-400">{t.tier_sov_desc}</p>
                 <ul className="mt-6 space-y-3 text-xs text-slate-300">
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> 100% Offline Air-Gapped Deployment</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-purple-400" /> Ed25519 Custom Key Authority</li>
@@ -501,10 +513,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl glass rounded-3xl p-8 border border-white/10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <span className="text-xs font-bold uppercase text-cyan-400">Kontak Resmi &amp; Pembayaran Lisensi</span>
-              <h3 className="mt-2 text-2xl font-bold text-white">PT CTAR Technology Indonesia</h3>
+              <span className="text-xs font-bold uppercase text-cyan-400">{t.contact_tag}</span>
+              <h3 className="mt-2 text-2xl font-bold text-white">{t.contact_title}</h3>
               <p className="mt-3 text-xs text-slate-400 leading-relaxed">
-                Untuk pengadaan lisensi korporat (*Enterprise License*), permohonan PoC / *Pilot Deployment*, konsultasi teknis data center, atau deposit billing komputasi:
+                {t.contact_desc}
               </p>
 
               <div className="mt-6 space-y-3 font-mono text-xs">
@@ -513,7 +525,7 @@ export default function HomePage() {
                     <MessageSquare className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">WhatsApp Hotline (Fast Response):</span>
+                    <span className="text-slate-400 block text-[10px]">{t.contact_wa}</span>
                     <a href="https://wa.me/6281260006666" target="_blank" className="text-emerald-400 hover:underline font-bold">
                       0812-6000-6666 (a.n. Abdul Rahman Rahmad)
                     </a>
@@ -525,7 +537,7 @@ export default function HomePage() {
                     <CreditCard className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Allo Bank Account (Official Billing):</span>
+                    <span className="text-slate-400 block text-[10px]">{t.contact_bank}</span>
                     <strong className="text-purple-300">081260006666 (a.n. Abdul Rahman Rahmad)</strong>
                   </div>
                 </div>
@@ -535,7 +547,7 @@ export default function HomePage() {
             <div className="rounded-2xl bg-black/50 p-6 border border-white/5 space-y-4">
               <h4 className="text-sm font-bold text-white flex items-center gap-2">
                 <Building className="h-4 w-4 text-cyan-400" />
-                <span>Ekosistem Subdomain Resmi CTARTech</span>
+                <span>{t.contact_eco_title}</span>
               </h4>
               <div className="space-y-3 text-xs">
                 <a
@@ -544,7 +556,7 @@ export default function HomePage() {
                 >
                   <div>
                     <strong className="text-cyan-300 block">zentyelastis.ctar.tech</strong>
-                    <span className="text-[10px] text-slate-400">Portal Utama Telemetri Mesh &amp; Digital Twin</span>
+                    <span className="text-[10px] text-slate-400">{t.contact_eco_zenty}</span>
                   </div>
                   <ExternalLink className="h-4 w-4 text-slate-400" />
                 </a>
@@ -555,7 +567,7 @@ export default function HomePage() {
                 >
                   <div>
                     <strong className="text-purple-300 block">gplay.ctar.tech</strong>
-                    <span className="text-[10px] text-slate-400">Central AI Data Gateway &amp; Vector Knowledge</span>
+                    <span className="text-[10px] text-slate-400">{t.contact_eco_gplay}</span>
                   </div>
                   <ExternalLink className="h-4 w-4 text-slate-400" />
                 </a>
@@ -566,7 +578,7 @@ export default function HomePage() {
                 >
                   <div>
                     <strong className="text-emerald-300 block">ctar.tech</strong>
-                    <span className="text-[10px] text-slate-400">Portal Induk Inovasi Teknologi Indonesia</span>
+                    <span className="text-[10px] text-slate-400">{t.contact_eco_ctar}</span>
                   </div>
                   <ExternalLink className="h-4 w-4 text-slate-400" />
                 </a>
@@ -578,9 +590,9 @@ export default function HomePage() {
 
       {/* 8. FOOTER */}
       <footer className="border-t border-white/10 bg-black/80 px-6 py-8 text-center text-xs text-slate-500">
-        <p>&copy; 2026 <strong>PT CTAR Technology Indonesia</strong>. Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
+        <p>{t.footer_copy}</p>
         <p className="mt-2 text-[11px] text-slate-600">
-          CTARTech-ZentyElastis™ adalah merek dagang terdaftar. Memenuhi kepatuhan ISO 14064-1, GHG Protocol Scope 2, dan UU PDP No. 27/2022.
+          {t.footer_sub}
         </p>
       </footer>
     </div>
