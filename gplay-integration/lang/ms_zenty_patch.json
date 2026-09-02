@@ -1,9 +1,0 @@
-{
-  "zenty.gateway_online": "GPlay AI Data Gateway dalam talian dan bersedia untuk penyelarasan telemetri.",
-  "zenty.peak_shaving_recommendation": "DeepOptiFlex dynamic peak shaving aktif: Sasaran penjimatan kuasa sebanyak :pct%.",
-  "zenty.deepoptiflex_advice": "Cadangan kecerdasan GPlay AI: Kekalkan had kuasa puncak di bawah :limit W.",
-  "zenty.cluster_not_found": "Kluster GPU tidak ditemui dalam pendaftaran GPlay.",
-  "zenty.self_healing_migration": "Tindakan Autonomi: Beban kerja dipindahkan secara proaktif ke nod GPU siap sedia yang lebih sejuk.",
-  "zenty.self_healing_vram_purge": "Tindakan Autonomi: Alokasi zombie VRAM yang terbiar berjaya dibersihkan.",
-  "zenty.self_healing_power_pin": "Tindakan Autonomi: Had kuasa perkakasan dilaraskan semula untuk menstabilkan beban PSU."
-}

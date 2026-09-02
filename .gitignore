@@ -43,5 +43,8 @@ tools/license-issuer/*.lic
 .env.*.local
 .vscode/
 .idea/
+
+# Internal GPlay Host Files (Keep Local Only)
+gplay-integration/
 *.swp
 *.swo

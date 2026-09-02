@@ -1,9 +1,0 @@
-{
-  "zenty.gateway_online": "GPlay AI Data Gateway is online and ready for telemetry sync.",
-  "zenty.peak_shaving_recommendation": "DeepOptiFlex dynamic peak shaving active: Target power reduced by :pct%.",
-  "zenty.deepoptiflex_advice": "GPlay AI intelligence recommendation: Maintain peak ceiling under :limit W.",
-  "zenty.cluster_not_found": "GPU Cluster not found in GPlay registry.",
-  "zenty.self_healing_migration": "Autonomous Action: Workload preemptively migrated to cooler standby GPU node.",
-  "zenty.self_healing_vram_purge": "Autonomous Action: Stale VRAM zombie allocation successfully purged.",
-  "zenty.self_healing_power_pin": "Autonomous Action: Hardware power cap pinned to stabilize PSU load."
-}
