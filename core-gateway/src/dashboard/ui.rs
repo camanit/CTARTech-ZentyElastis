@@ -206,6 +206,9 @@ pub fn render_dashboard_html() -> &'static str {
             <div class="pill pill-cyan" id="badge-license">
                 <span>🔑 Ed25519 Verified</span>
             </div>
+            <div class="pill pill-emerald" id="badge-sla">
+                <span>🛡️ SLAShield: OPTIMAL</span>
+            </div>
             <div class="pill pill-purple" id="badge-mesh">
                 <span>Zero-Trust HMAC Active</span>
             </div>
@@ -309,6 +312,60 @@ pub fn render_dashboard_html() -> &'static str {
                 </button>
                 <button class="btn-action btn-reset" id="btn-reset" onclick="resetBreaker()">
                     🔄 RESET CIRCUIT BREAKER
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sprint 3 Grid: SLAShield Performance Guardian & SOC Merkle ESG Audit Ledger -->
+    <div class="bottom-grid">
+        <!-- 1. SLAShield Performance Guardian -->
+        <div class="glass">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span style="color: var(--neon-cyan);">🛡️</span>
+                    <span>SLAShield™ Performance Guardian</span>
+                </div>
+                <div class="pill pill-emerald" id="sla-status-pill">SLA: OPTIMAL</div>
+            </div>
+            <div class="panel-body">
+                <div style="display: flex; flex-direction: column; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-muted);">Current Throughput:</span>
+                        <strong id="sla-current-tps" style="color: var(--neon-cyan);">-- TPS</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-muted);">Target SLA Floor:</span>
+                        <strong style="color: var(--text-main);">120.0 TPS</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-muted);">Power Cap Override:</span>
+                        <strong id="sla-override-cap" style="color: var(--neon-emerald);">NONE (Peak Shaving Allowed)</strong>
+                    </div>
+                    <div id="sla-advisory" style="font-size: 11px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); color: #e5e7eb; border-left: 3px solid var(--neon-emerald);">
+                        Menunggu telemetri inferensi...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SOC Merkle Chain Audit Ledger & ESG Green AI -->
+        <div class="glass">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span style="color: var(--neon-emerald);">📜</span>
+                    <span>SOC Merkle Chain Audit Ledger (ESG Compliance)</span>
+                </div>
+                <div class="pill pill-purple" id="merkle-height-pill">Block #0</div>
+            </div>
+            <div class="panel-body" style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
+                    <div><span style="color: var(--text-muted);">Merkle Root:</span> <span id="merkle-root-val" style="color: var(--neon-cyan); word-break: break-all;">Genesis Initialized</span></div>
+                    <div><span style="color: var(--text-muted);">Audit Standard:</span> <span style="color: var(--text-main);">ISO 14064-1 & GHG Protocol Scope 2</span></div>
+                    <div><span style="color: var(--text-muted);">Verification:</span> <span style="color: var(--neon-emerald);">CRYPTOGRAPHICALLY SEALED (SHA-256)</span></div>
+                </div>
+                <button onclick="downloadEsgCertificate()" class="btn-action" style="background: linear-gradient(135deg, #059669, #10b981); color: #fff; font-size: 12px; font-weight: 700;">
+                    📜 UNDUH SERTIFIKAT AUDIT ESG RESMI (.JSON)
                 </button>
             </div>
         </div>
@@ -475,6 +532,51 @@ pub fn render_dashboard_html() -> &'static str {
                 document.getElementById('val-saved-co2').innerText = `Saved: ${opt.carbon_prevented_gco2.toFixed(3)} gCO₂`;
             }
 
+            // SLAShield Guardian status
+            if (data.slashield) {
+                const sla = data.slashield;
+                document.getElementById('sla-current-tps').innerText = `${sla.current_tps.toFixed(1)} TPS`;
+                const pill = document.getElementById('sla-status-pill');
+                const badge = document.getElementById('badge-sla');
+                const adv = document.getElementById('sla-advisory');
+                const capEl = document.getElementById('sla-override-cap');
+
+                adv.innerText = sla.advisory;
+
+                if (sla.status === 'RESCUE') {
+                    pill.className = 'pill pill-rose';
+                    pill.innerText = 'SLA: RESCUE ACTIVE';
+                    badge.className = 'pill pill-rose';
+                    badge.innerHTML = '<span>⚠️ SLAShield: RESCUE</span>';
+                    adv.style.borderColor = 'var(--neon-rose)';
+                    capEl.innerText = `${sla.override_power_cap_watt.toFixed(0)}W (SLA Headroom Boost)`;
+                    capEl.style.color = 'var(--neon-rose)';
+                } else if (sla.status === 'ADAPTIVE_THROTTLE') {
+                    pill.className = 'pill pill-purple';
+                    pill.innerText = 'SLA: BUFFER ZONE';
+                    badge.className = 'pill pill-purple';
+                    badge.innerHTML = '<span>⚡ SLAShield: BUFFER</span>';
+                    adv.style.borderColor = 'var(--neon-amber)';
+                    capEl.innerText = `${sla.override_power_cap_watt.toFixed(0)}W (Stabilized)`;
+                    capEl.style.color = 'var(--neon-amber)';
+                } else {
+                    pill.className = 'pill pill-emerald';
+                    pill.innerText = 'SLA: OPTIMAL';
+                    badge.className = 'pill pill-emerald';
+                    badge.innerHTML = '<span>🛡️ SLAShield: OPTIMAL</span>';
+                    adv.style.borderColor = 'var(--neon-emerald)';
+                    capEl.innerText = 'NONE (Peak Shaving Allowed)';
+                    capEl.style.color = 'var(--neon-emerald)';
+                }
+            }
+
+            // SOC Merkle Chain Audit Status
+            if (data.merkle_status) {
+                const m = data.merkle_status;
+                document.getElementById('merkle-height-pill').innerText = `Block #${m.block_height}`;
+                document.getElementById('merkle-root-val').innerText = m.merkle_root;
+            }
+
             // Update Circuit Breaker Badge
             const breakerBadge = document.getElementById('breaker-badge');
             const breakerText = document.getElementById('breaker-text');
@@ -537,6 +639,30 @@ pub fn render_dashboard_html() -> &'static str {
             fetchLiveTelemetry();
         } catch (e) {
             alert('Gagal reset breaker: ' + e);
+        }
+    }
+
+    // Unduh Sertifikat Kepatuhan ESG Green AI
+    async function downloadEsgCertificate() {
+        try {
+            const res = await fetch('/api/v1/audit/esg-certificate');
+            if (!res.ok) {
+                alert('Gagal mengambil sertifikat ESG');
+                return;
+            }
+            const cert = await res.json();
+            const jsonStr = JSON.stringify(cert, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ESG_GreenAI_Certificate_${cert.certificate_id}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            alert('Gagal mengunduh sertifikat ESG: ' + e);
         }
     }
 

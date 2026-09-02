@@ -1,8 +1,10 @@
+use crate::audit::{EsgCertificate, MerkleAuditLedger, MerkleBlock};
 use crate::breaker::{evaluate_actuation, ActuationStatus};
 use crate::dashboard::render_dashboard_html;
 use crate::deepoptiflex::{DeepOptiFlexEngine, OptimizationResult};
 use crate::gplay::GPlayAiClient;
 use crate::license::{verify_license_file, LicenseStatus};
+use crate::slashield::{SLAShieldDecision, SLAShieldGuardian};
 use axum::{
     extract::{Json, State},
     http::{HeaderMap, StatusCode},
@@ -73,6 +75,7 @@ pub struct GuardResponse {
     pub reason: String,
     pub latency_us: u64,
     pub deepoptiflex_advice: Option<String>,
+    pub slashield_advice: Option<String>,
     pub auto_remediation_action: Option<String>, // Self-Healing Engine Action
 }
 
@@ -97,6 +100,8 @@ pub struct LiveTelemetryResponse {
     pub circuit_breaker_status: String,
     pub latest_metrics: Option<DeviceTelemetryPayload>,
     pub deepoptiflex: Option<OptimizationResult>,
+    pub slashield: Option<SLAShieldDecision>,
+    pub merkle_status: Option<serde_json::Value>,
     pub history: Vec<TelemetryHistoryPoint>,
     pub self_healing_events: Vec<SelfHealingEvent>,
     pub active_license: Option<LicenseStatus>,
@@ -109,14 +114,17 @@ pub struct AppState {
     pub license_status: Arc<Mutex<Option<LicenseStatus>>>,
     pub total_ingested: Arc<Mutex<u64>>,
     pub deepoptiflex: DeepOptiFlexEngine,
+    pub slashield: SLAShieldGuardian,
+    pub audit_ledger: MerkleAuditLedger,
     pub manual_trip: Arc<Mutex<bool>>,
     pub latest_metrics: Arc<Mutex<Option<DeviceTelemetryPayload>>>,
     pub latest_deepoptiflex: Arc<Mutex<Option<OptimizationResult>>>,
+    pub latest_slashield: Arc<Mutex<Option<SLAShieldDecision>>>,
     pub telemetry_history: Arc<Mutex<VecDeque<TelemetryHistoryPoint>>>,
     pub self_healing_feed: Arc<Mutex<Vec<SelfHealingEvent>>>,
 }
 
-/// Membangun Router Axum dengan Zero-Trust Security Mesh & Web Dashboard
+/// Membangun Router Axum dengan Zero-Trust Security Mesh, Audit Ledger & Web Dashboard
 pub fn app_router(state: AppState) -> Router {
     let cors = CorsLayer::new()
         .allow_origin(Any)
@@ -138,7 +146,11 @@ pub fn app_router(state: AppState) -> Router {
         .route("/api/v1/breaker/trip", post(trip_breaker_handler))
         .route("/api/v1/breaker/reset", post(reset_breaker_handler))
 
-        // 4. System Health & Licensing
+        // 4. SOC Merkle Chain Audit & ESG Certification
+        .route("/api/v1/audit/chain", get(get_audit_chain_handler))
+        .route("/api/v1/audit/esg-certificate", get(get_esg_certificate_handler))
+
+        // 5. System Health & Licensing
         .route("/health", get(health_handler))
         .route("/api/v1/license/status", get(license_status_handler))
         .route("/api/v1/license/apply", post(apply_license_handler))
@@ -170,20 +182,52 @@ pub async fn live_telemetry_handler(State(state): State<AppState>) -> impl IntoR
     let breaker_status = if is_tripped { "TRIPPED" } else { "ARMED" };
     let latest = state.latest_metrics.lock().unwrap().clone();
     let deepopt = state.latest_deepoptiflex.lock().unwrap().clone();
+    let sla = state.latest_slashield.lock().unwrap().clone();
     let hist: Vec<TelemetryHistoryPoint> = state.telemetry_history.lock().unwrap().iter().cloned().collect();
     let events = state.self_healing_feed.lock().unwrap().clone();
     let lic = state.license_status.lock().unwrap().clone();
     let total = *state.total_ingested.lock().unwrap();
 
+    let (height, root, j_saved, c_saved) = state.audit_ledger.get_latest_status();
+    let merkle_json = serde_json::json!({
+        "block_height": height,
+        "merkle_root": root,
+        "total_joules_saved": j_saved,
+        "total_carbon_prevented_gco2": c_saved,
+    });
+
     Json(LiveTelemetryResponse {
         circuit_breaker_status: breaker_status.to_string(),
         latest_metrics: latest,
         deepoptiflex: deepopt,
+        slashield: sla,
+        merkle_status: Some(merkle_json),
         history: hist,
         self_healing_events: events,
         active_license: lic,
         total_samples_ingested: total,
     })
+}
+
+/// Mengambil riwayat rantai blok audit Merkle
+pub async fn get_audit_chain_handler(State(state): State<AppState>) -> impl IntoResponse {
+    let chain = state.audit_ledger.get_chain();
+    Json(chain)
+}
+
+/// Mengunduh Sertifikat Audit Kepatuhan ESG Green-AI Resmi
+pub async fn get_esg_certificate_handler(State(state): State<AppState>) -> impl IntoResponse {
+    let client_name = {
+        let lic_guard = state.license_status.lock().unwrap();
+        if let Some(ref lic) = *lic_guard {
+            lic.client_id.clone()
+        } else {
+            "Enterprise AI Data Center Client".to_string()
+        }
+    };
+
+    let cert = state.audit_ledger.generate_esg_certificate(&client_name);
+    Json(cert)
 }
 
 /// Pemicu darurat Circuit Breaker manual dari dashboard
@@ -225,7 +269,7 @@ pub async fn reset_breaker_handler(State(state): State<AppState>) -> impl IntoRe
     }))
 }
 
-/// Handler penerima telemetri dengan verifikasi Zero-Trust & DeepOptiFlex
+/// Handler penerima telemetri dengan verifikasi Zero-Trust, DeepOptiFlex, SLAShield & Merkle Audit
 pub async fn ingest_telemetry_handler(
     State(state): State<AppState>,
     headers: HeaderMap,
@@ -241,6 +285,7 @@ pub async fn ingest_telemetry_handler(
                 reason: "ACTUATION OVERRIDE: Manual Emergency Kill-Switch is active. Reset breaker to resume.".to_string(),
                 latency_us: 1,
                 deepoptiflex_advice: None,
+                slashield_advice: None,
                 auto_remediation_action: Some("EMERGENCY_LOAD_SHED".to_string()),
             }),
         );
@@ -269,6 +314,7 @@ pub async fn ingest_telemetry_handler(
                 ),
                 latency_us: 1,
                 deepoptiflex_advice: None,
+                slashield_advice: None,
                 auto_remediation_action: None,
             }),
         );
@@ -295,6 +341,7 @@ pub async fn ingest_telemetry_handler(
                     reason: "Failed to initialize cryptographic HMAC context".to_string(),
                     latency_us: 0,
                     deepoptiflex_advice: None,
+                    slashield_advice: None,
                     auto_remediation_action: None,
                 }),
             )
@@ -312,6 +359,7 @@ pub async fn ingest_telemetry_handler(
                 reason: "ZERO-TRUST INTEGRITY VIOLATION: Invalid X-Zenty-Signature HMAC-SHA256 digest".to_string(),
                 latency_us: 1,
                 deepoptiflex_advice: None,
+                slashield_advice: None,
                 auto_remediation_action: None,
             }),
         );
@@ -362,7 +410,30 @@ pub async fn ingest_telemetry_handler(
     let opt_result = state.deepoptiflex.evaluate_sample(payload.wattage as f64);
     *state.latest_deepoptiflex.lock().unwrap() = Some(opt_result.clone());
 
-    // 6. Rekam ke Ring-Buffer Riwayat (Maksimal 60 sampel)
+    // 6. Evaluasi SLAShield™ Guardian (Penjaga Latensi & Throughput Inferensi)
+    let current_tps = payload.tokens_per_sec.unwrap_or(168.0);
+    let sla_decision = state.slashield.evaluate(
+        current_tps,
+        payload.wattage as f64,
+        opt_result.recommended_cap_watt,
+    );
+    *state.latest_slashield.lock().unwrap() = Some(sla_decision.clone());
+
+    // Tentukan rekomendasi batas daya akhir (DeepOptiFlex disesuaikan oleh SLAShield jika terjadi bahaya SLA)
+    let effective_cap_watt = sla_decision
+        .override_power_cap_watt
+        .unwrap_or(opt_result.recommended_cap_watt);
+
+    // 7. Rekam ke SOC Merkle Chain Audit Ledger (Tamper-Proof ESG Green Accounting)
+    let joules_saved_sample = (payload.wattage as f64 - effective_cap_watt).max(0.0) * 1.5;
+    state.audit_ledger.record_sample(
+        &payload.device_id,
+        payload.wattage,
+        joules_saved_sample,
+        opt_result.carbon_prevented_gco2,
+    );
+
+    // 8. Rekam ke Ring-Buffer Riwayat (Maksimal 60 sampel)
     {
         let mut hist = state.telemetry_history.lock().unwrap();
         if hist.len() >= 60 {
@@ -372,7 +443,7 @@ pub async fn ingest_telemetry_handler(
             timestamp: payload.timestamp,
             wattage: payload.wattage,
             temperature_c: payload.temperature_c,
-            recommended_cap: opt_result.recommended_cap_watt,
+            recommended_cap: effective_cap_watt,
         });
     }
 
@@ -389,15 +460,14 @@ pub async fn ingest_telemetry_handler(
         ActuationStatus::BLOCK => "BLOCK",
     };
 
-    let advice = Some(opt_result.advisory_message);
-
     (
         StatusCode::OK,
         Json(GuardResponse {
             status: status_str.to_string(),
             reason: decision.reason,
             latency_us: decision.latency_us,
-            deepoptiflex_advice: advice,
+            deepoptiflex_advice: Some(opt_result.advisory_message),
+            slashield_advice: Some(sla_decision.advisory),
             auto_remediation_action: self_healing_action,
         }),
     )
