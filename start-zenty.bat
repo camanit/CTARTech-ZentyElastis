@@ -12,18 +12,17 @@ echo.
 cd /d "%~dp0"
 
 :: 1. Cek binary release Core Gateway
-set "GATEWAY_EXE=core-gateway\target\release\core-gateway.exe"
-if not exist "%GATEWAY_EXE%" (
-    echo [!] Binary release belum ditemukan, mencari binary debug...
-    set "GATEWAY_EXE=core-gateway\target\debug\core-gateway.exe"
-)
-
-if not exist "%GATEWAY_EXE%" (
+if exist "core-gateway.exe" (
+    set "GATEWAY_EXE=core-gateway.exe"
+) else if exist "core-gateway\target\release\core-gateway.exe" (
+    set "GATEWAY_EXE=core-gateway\target\release\core-gateway.exe"
+) else (
     echo [!] Mengompilasi Core Gateway terlebih dahulu...
     cd core-gateway
     cargo build --release
     cd ..
-    set "GATEWAY_EXE=core-gateway\target\release\core-gateway.exe"
+    copy /y "core-gateway\target\release\core-gateway.exe" "core-gateway.exe" > nul 2>&1
+    set "GATEWAY_EXE=core-gateway.exe"
 )
 
 :: 2. Salin kunci dan lisensi jika ada
@@ -38,13 +37,13 @@ if exist "tools\license-issuer\license.lic" (
 taskkill /F /IM core-gateway.exe > nul 2>&1
 
 echo [*] Menjalankan Core Gateway (Rust Axum Engine di port 8088)...
-start "ZentyElastis Core Gateway" /MIN "%GATEWAY_EXE%"
+start "" /MIN "%GATEWAY_EXE%"
 
 :: Tunggu 2 detik agar gateway aktif
 timeout /t 2 /nobreak > nul
 
 echo [*] Menjalankan Zero-Dependency Edge Telemetry Agent...
-start "ZentyElastis Edge Agent" /MIN python edge-agent\python\agent.py
+start "" /MIN python edge-agent\python\agent.py
 
 echo.
 echo [✓] SISTEM ZENTYELASTIS BERHASIL AKTIF!
