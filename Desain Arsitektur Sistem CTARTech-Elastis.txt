@@ -217,17 +217,32 @@ DIsesuaikan
 
 Untuk memenuhi kualifikasi pengadaan enterprise, perbankan (BFSI), dan instansi pemerintah, sistem dirancang dengan prinsip **Security by Design** dan kesiapan kepatuhan standar internasional:
 
-### 6.1. Pemetaan Standar Kepatuhan (Compliance Mapping)
+### 6.1. Pemetaan Standar Kepatuhan Internasional & NIST CSF 2.0
 
 | Standar / Regulasi | Deskripsi Fokus | Implementasi Teknis di CTARTech-ZentyElastis |
 | :--- | :--- | :--- |
-| **ISO/IEC 27001** | *Information Security Management System (ISMS)* | Enkripsi end-to-end (AES-256 & TLS 1.3), isolasi data antar-tenant, kontrol hak akses berbasis peran (RBAC/ABAC), dan otentikasi MFA/SSO. |
-| **ISO 22301** | *Business Continuity Management (BCM)* | Terpenuhi melalui modul **Stress-Test Simulator** (*Resilience Without Heroes*) dan **Time-Based Escalation** otomatis untuk memitigasi disrupsi operasional. |
-| **ISO 9001** | *Quality Management System (QMS)* | Terpenuhi melalui **Mandatory Root Cause Analytics (RCA Gate)** dan siklus perbaikan SOP berkelanjutan (*Auto Post-Mortem & SOP Sync*). |
-| **UU PDP No. 27/2022 & GDPR** | *Perlindungan Data Pribadi (Privacy)* | Fitur *Data Masking / Anonymization* pada log insiden, manajemen retensi log, dan isolasi ketat *Private Vector Data Bank*. |
+| **NIST CSF 2.0 - GOVERN (GV)** | *Tata Kelola & Kebijakan Risiko* | Tata kelola lisensi offline Ed25519 (air-gapped), kontrol isolasi data antar-tenant, kepatuhan UU PDP No. 27/2022. |
+| **NIST CSF 2.0 - IDENTIFY (ID)**| *Manajemen Aset & Visibilitas* | Zero-touch hardware autodiscovery (NVIDIA NVML, AMD ROCm, TPU, CPU), pemetaan relasi perangkat ke Power DC Ontology™. |
+| **NIST CSF 2.0 - PROTECT (PR)** | *Proteksi & Pengamanan Akses* | Zero-Trust Edge-to-Core Harness (HMAC-SHA256, Anti-Replay Nonce), AES-256 & TLS 1.3/mTLS, token-bucket rate limiter. |
+| **NIST CSF 2.0 - DETECT (DE)**  | *Deteksi Anomali & Monitoring* | Telemetri multi-dimensi real-time (Clocks, Watt, Temp, Voltage, Throttle Reasons, Joules/Token) latensi sub-milidetik. |
+| **NIST CSF 2.0 - RESPOND (RS)** | *Respon Insiden & Mitigasi* | Actuation Assurance, Emergency Circuit Breaker (<5ms instant kill-switch), Preemptive Workload Migration. |
+| **NIST CSF 2.0 - RECOVER (RC)** | *Pemulihan & Ketahanan Operasional*| Autonomous Self-Healing Engine (VRAM zombie cache purge, Dynamic Power Cap Pinning, fail-safe fallback). |
+| **ISO/IEC 27001** | *Information Security Management (ISMS)* | Enkripsi end-to-end, RBAC/ABAC multi-tenant, dan mTLS Hardware Attestation. |
+| **ISO 22301** | *Business Continuity Management (BCM)* | Modul Stress-Test Simulator dan Time-Based Escalation mitigasi disrupsi operasional. |
+| **ISO 9001** | *Quality Management System (QMS)* | Mandatory Root Cause Analytics (RCA Gate) dan siklus Auto Post-Mortem & SOP Sync. |
+| **UU PDP No. 27/2022 & GDPR** | *Perlindungan Data Pribadi (Privacy)* | Data Masking / Anonymization pada log telemetri, manajemen retensi, dan Private GPlay AI Gateway. |
 
+Standar Keamanan Korporasi: Seluruh dokumen rahasia, SOP internal, dan riwayat penanganan kasus disimpan dengan enkripsi tingkat tinggi di bawah payung tata kelola keamanan NIST CSF 2.0 yang sudah kita terapkan sejak awal.
 
-Standar Keamanan Korporasi: Semua dokumen rahasia, SOP internal, dan riwayat penanganan kasus disimpan dengan enkripsi tingkat tinggi di bawah payung tata kelola keamanan NIST CSF 2.0 yang sudah kita terapkan sejak awal.
+---
+
+### 💳 Informasi Kontak Resmi, Pengadaan & Pembayaran Lisensi Enterprise
+- **WhatsApp Resmi**: 0812-6000-6666 (a.n. Abdul Rahman Rahmad) - https://wa.me/6281260006666
+- **Nomor Rekening Resmi (Allo Bank)**: 081260006666 (a.n. Abdul Rahman Rahmad)
+- **Subdomain Landing Page**: https://zentyelastis.ctar.tech
+- **AI Data Gateway**: https://gplay.ctar.tech
+- **Portal Induk**: https://ctar.tech
+- **GitHub**: https://github.com/camanit/CTARTech-ZentyElastis
 
 
 

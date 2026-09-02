@@ -134,14 +134,18 @@ python keygen.py --client "PT Enterprise Maju" --nodes 32 --days 365
 
 ---
 
-## 🛡️ Kepatuhan Standar Enterprise
+## 🛡️ Kepatuhan Standar Enterprise & NIST CSF 2.0
 
-| Standar / Regulasi | Deskripsi Fokus | Implementasi di CTARTech-ZentyElastis |
+Sistem dirancang berdasarkan prinsip **Security by Design** dan memenuhi kerangka kerja keamanan siber global **NIST Cybersecurity Framework (CSF) 2.0**:
+
+| Fungsi NIST CSF 2.0 | Deskripsi Fokus | Implementasi Teknis di CTARTech-ZentyElastis |
 | :--- | :--- | :--- |
-| **ISO/IEC 27001** | *Information Security Management System* | Enkripsi end-to-end (AES-256 & TLS 1.3), mTLS antar node, isolasi data tenant. |
-| **ISO 22301** | *Business Continuity Management (BCM)* | Emergency Circuit Breaker otomatis dan degradasi lisensi bertahap (*Graceful Fail-Safe*). |
-| **UU PDP No. 27/2022 & GDPR** | *Perlindungan Data Pribadi* | Zero-Leakage air-gapped runtime, data masking metrik ke GPlay AI. |
-| **Green Grid / ESG** | *Efisiensi Daya & Emisi Karbon* | SOC Merkle Chain Audit Ledger untuk pencatatan emisi $CO_2$ dan efisiensi air pendingin. |
+| **1. GOVERN (GV)** | *Tata Kelola & Kebijakan Risiko* | Tata kelola lisensi offline Ed25519 (air-gapped), kebijakan isolasi data multi-tenant, serta kepatuhan UU PDP No. 27/2022 & GDPR. |
+| **2. IDENTIFY (ID)** | *Manajemen Aset & Visibilitas* | Zero-touch hardware autodiscovery (NVIDIA NVML, AMD ROCm, TPU, CPU), pemetaan relasi hierarkis ke dalam *Power DC Ontology™*. |
+| **3. PROTECT (PR)** | *Proteksi & Pengamanan Akses* | Zero-Trust Edge-to-Core Harness (HMAC-SHA256, Anti-Replay Guard), mTLS antar-node, AST Injection Barrier, token-bucket rate limiter. |
+| **4. DETECT (DE)** | *Deteksi Anomali & Monitoring* | Pemantauan telemetri multi-dimensi real-time (Clocks, Watt, Temp, Voltage, Throttle Reasons, Joules/Token) dengan latensi sub-milidetik. |
+| **5. RESPOND (RS)** | *Respon Insiden & Mitigasi* | Actuation Assurance, Emergency Circuit Breaker (<5ms instant hardware kill-switch), preemptive workload migration. |
+| **6. RECOVER (RC)** | *Pemulihan & Ketahanan Operasional* | Autonomous Self-Healing Engine (VRAM zombie cache purge, dynamic power cap pinning, low-power fail-safe fallback). |
 
 ---
 
@@ -152,5 +156,20 @@ python keygen.py --client "PT Enterprise Maju" --nodes 32 --days 365
 
 ---
 
-## 👥 Tim & Ekosistem
-Dikembangkan oleh tim **CTARTech** bekerjasama dengan ekosistem data cerdas **[GPlay AI](https://gplay.ctar.tech)**.
+## 🌐 Layanan Subdomain & Ekosistem Resmi
+
+- **Landing Page & Portal Komunitas**: [https://zentyelastis.ctar.tech](https://zentyelastis.ctar.tech)
+- **AI Data Gateway & Central Knowledge**: [https://gplay.ctar.tech](https://gplay.ctar.tech)
+- **Portal Induk Teknologi**: [https://ctar.tech](https://ctar.tech)
+
+---
+
+## 💳 Kontak Resmi & Pembayaran Lisensi Enterprise
+
+Untuk pengadaan lisensi korporat (*Enterprise License*), permohonan PoC / *Pilot Deployment*, konsultasi teknis, atau deposit billing komputasi:
+
+* **WhatsApp Resmi**: [0812-6000-6666](https://wa.me/6281260006666) *(a.n. Abdul Rahman Rahmad)*
+* **Nomor Rekening Resmi (Allo Bank)**: `081260006666` *(a.n. Abdul Rahman Rahmad)*
+* **Email Pengadaan**: `enterprise@ctar.tech` / `dev@ctar.tech`
+* **GitHub Repository**: [https://github.com/camanit/CTARTech-ZentyElastis](https://github.com/camanit/CTARTech-ZentyElastis)
+
