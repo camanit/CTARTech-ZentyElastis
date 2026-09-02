@@ -16,10 +16,22 @@ CTARTech-ZentyElastis adalah sistem orkestrasi dan manajemen daya cerdas untuk k
 +-----------------------------------------------------------------------------------+
 |               1. EDGE TELEMETRY & AGENT AUTODISCOVERY LAYER                       |
 |  - Vendor-Agnostic Agents (NVIDIA NVML, AMD ROCm, TPU, CPU Cluster OS)           |
-|  - Real-time Telemetry Ingestion (Wattage, Temperature, Water/CO2 Metrics)        |
+|  - Multi-Dimensional Telemetry: Clocks, Wattage, Temp, Throttle Reasons, VRAM,    |
+|    Energy per Token (Joules/Token), Power Quality (Voltage/PF), ESG Metrics       |
 +-----------------------------------------------------------------------------------+
                                          |
-                                         v (High-Concurrency Streaming)
+                                         v (Encrypted Streaming)
++-----------------------------------------------------------------------------------+
+|               🛡️ SECURITY & TELEMETRY MESH (EDGE-TO-CORE HARNESS)                 |
+|  - Zero-Trust Device Attestation & Cryptographic Payload Integrity (HMAC-SHA256) |
+|  - Anti-Replay & Anti-Tampering Nonce Verification Guard                          |
+|  - Autonomous Telemetry & Self-Healing Engine (Closed-Loop Auto-Remediation)      |
+|    * Preemptive Workload Migration (Pengalihan beban sebelum thermal threshold)   |
+|    * Autonomous VRAM Zombie Cache Purge                                           |
+|    * Dynamic Hardware Power Cap Pinning                                           |
++-----------------------------------------------------------------------------------+
+                                         |
+                                         v (<0.1ms Verified Streaming)
 +-----------------------------------------------------------------------------------+
 |               2. RUST CORE RUNTIME GATEWAY (Axum Engine <0.1ms Latency)           |
 |  - Zero-Leakage License Verifier (Offline Ed25519 Cryptographic Check)            |
@@ -53,9 +65,15 @@ CTARTech-ZentyElastis adalah sistem orkestrasi dan manajemen daya cerdas untuk k
 ## 🚀 Fitur Unggulan
 
 - **Sub-Milisecond Gateway**: Backend berbasis Rust Axum memproses puluhan ribu paket metrik per detik dengan latensi evaluasi `<0.1ms`.
+- **Security & Telemetry Mesh**: Perlindungan **Zero-Trust Edge-to-Core Harness** dengan autentikasi perangkat kriptografis (HMAC-SHA256) dan verifikasi anti-replay.
+- **Autonomous Self-Healing & Auto-Remediation**: Sistem otonom yang memulihkan dirinya sendiri—mencakup *preemptive workload migration* (pengalihan antrean prompt LLM sebelum GPU overheating), *VRAM zombie cache purge*, dan *dynamic power cap pinning*.
+- **Telemetri Multi-Dimensi Tingkat Lanjut**:
+  - **Diagnostik Throttling**: Deteksi alasan GPU melambat (*SW Power Cap, Thermal Slowdown, HW Slowdown*).
+  - **Metrik Energi AI**: Mengukur **Joules per Token** untuk penagihan komputasi presisi (*Token-Based Billing*).
+  - **Kualitas Kelistrikan & Pendingin**: Monitoring voltase PSU, faktor daya ($\cos \phi$), dan suhu pendingin cair (*liquid cooling*).
 - **Actuation Assurance & Instant Circuit Breaker**: Evaluasi ambang batas fisik mandiri (*hardware fail-safe*). Memutus aliran daya atau membatasi beban dalam `<5ms` jika suhu inti atau daya listrik melampaui batas bahaya.
-- **Pusat AI Data Tunggal (GPlay AI)**: Seluruh pola antrean prompt LLM dan tarikan daya di-cluster menjadi *vector embeddings* di `gplay.ctar.tech` untuk memprediksi lonjakan panas sebelum terjadi.
-- **DeepOptiFlex™ Dynamic Peak Shaving**: Memangkas puncak tarikan daya listrik hingga **15–25%** pada saat beban puncak (*peak hours*), menghemat jutaan hingga ratusan juta rupiah tagihan listrik data center.
+- **Pusat AI Data Tunggal (GPlay AI - `gplay.ctar.tech`)**: Seluruh pola antrean prompt LLM dan tarikan daya di-cluster menjadi *vector embeddings* di GPlay AI untuk memprediksi lonjakan panas sebelum terjadi.
+- **DeepOptiFlex™ Dynamic Peak Shaving**: Memangkas puncak tarikan daya listrik hingga **15–25%** pada saat beban puncak (*peak hours*), menghemat puluhan hingga ratusan juta rupiah tagihan listrik data center.
 - **SLAShield™ Guardian**: Memastikan pemotongan daya tidak menyebabkan *latency spike* atau pelanggaran SLA klien korporat.
 - **Lisensi Air-Gapped Ed25519**: Klien perbankan & BUMN dapat memverifikasi lisensi 100% offline tanpa perlu koneksi internet ke luar server tertutup (*Zero-Leakage Compliance*).
 - **SOC Merkle Chain Audit Ledger**: Setiap perubahan beban daya dan jejak emisi karbon ($CO_2$) dicatat ke rantai hash Merkle lokal yang *tamper-proof* dan siap diaudit.

@@ -3,19 +3,31 @@ Sistem ini dirancang menggunakan arsitektur 3-Tier High-Performance Engine berba
 
 +-----------------------------------------------------------------------------------+
 |               1. EDGE TELEMETRY & AGENT AUTODISCOVERY LAYER                       |
-|  - Vendor-Agnostic Agents (NVIDIA, AMD, TPU, CPU Cluster OS & Containers)         |
-|  - Real-time Telemetry Ingestion (Wattage, Temperature, Water/CO2 Metrics)        |
+|  - Vendor-Agnostic Agents (NVIDIA NVML, AMD ROCm, TPU, CPU Cluster OS)           |
+|  - Multi-Dimensional Telemetry: Wattage, Temp, Clocks, Throttle Reasons, VRAM,    |
+|    Energy per Token (Joules/Token), Power Quality (Voltage/PF), ESG Metrics       |
 +-----------------------------------------------------------------------------------+
                                          |
-                                         v (High-Concurrency Streaming)
+                                         v (Encrypted Streaming)
++-----------------------------------------------------------------------------------+
+|               🛡️ SECURITY & TELEMETRY MESH (EDGE-TO-CORE HARNESS)                 |
+|  - Zero-Trust Edge-to-Core Harness (Device Authentication & Payload Integrity)    |
+|  - Cryptographic Anti-Replay & Anti-Tampering Guard (HMAC-SHA256 & Nonce)         |
+|  - Autonomous Telemetry & Self-Healing Engine (Closed-Loop Auto-Remediation)      |
+|    * Preemptive Workload Migration (Pengalihan beban sebelum thermal threshold)   |
+|    * Autonomous VRAM Zombie Cache Purge                                           |
+|    * Dynamic Hardware Power Cap Pinning                                           |
++-----------------------------------------------------------------------------------+
+                                         |
+                                         v (<0.1ms Verified Ingestion)
 +-----------------------------------------------------------------------------------+
 |               2. RUST CORE RUNTIME GATEWAY (Axum Engine <0.1ms Latency)           |
+|  - Zero-Leakage License Verifier (Offline Ed25519 Cryptographic Check)            |
 |  - Power DC GPU Ontology & Semantic Graph Mapping                                 |
 |  - DeepOptiFlex™ AI-Driven Power & Peak Management Engine                         |
 |  - SLAShield™ Guarantee Guard (SLA Protection & Automated Workload Throttling)    |
-|  - Predictive AI Workload Scaling (Linked with CTARTech-AIControlPlane)           |
-|  - Green-Grid Audit Ledger (SOC Merkle Chain for PDP & Carbon Compliance)         |
 |  - Emergency Circuit Breaker (Zero Trust Instant Kill-Switch Protocol)            |
+|  - Green-Grid Audit Ledger (SOC Merkle Chain for PDP & Carbon Compliance)         |
 +-----------------------------------------------------------------------------------+
                                          |
                                          v (Secured API Layer)
