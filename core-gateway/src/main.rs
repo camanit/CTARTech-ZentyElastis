@@ -1,11 +1,15 @@
 mod breaker;
+mod dashboard;
+mod deepoptiflex;
 mod gateway;
 mod gplay;
 mod license;
 
+use deepoptiflex::{DeepOptiFlexEngine, DeepOptiFlexPolicy};
 use gateway::{app_router, AppState};
 use gplay::GPlayAiClient;
 use license::verify_license_file;
+use std::collections::VecDeque;
 use std::net::SocketAddr;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
@@ -23,7 +27,8 @@ async fn main() {
         .init();
 
     println!("===================================================================");
-    println!("⚡ CTARTech-ZentyElastis: Core Runtime Gateway (Axum Engine <0.1ms)");
+    println!("⚡ CTARTech-ZentyElastis: Core Runtime Gateway & Digital Twin Web UI");
+    println!("   DeepOptiFlex™ Predictive Shaving & Zero-Trust Telemetry Mesh");
     println!("===================================================================");
 
     // 2. Deteksi lisensi lokal otomatis jika ada
@@ -45,7 +50,7 @@ async fn main() {
         None
     };
 
-    // 3. Konfigurasi State Aplikasi
+    // 3. Konfigurasi State Aplikasi & Mesin Prediktif DeepOptiFlex™
     let state = AppState {
         gplay_client: GPlayAiClient::new(
             Some("https://gplay.ctar.tech".to_string()),
@@ -53,21 +58,33 @@ async fn main() {
         ),
         license_status: Arc::new(Mutex::new(initial_license)),
         total_ingested: Arc::new(Mutex::new(0)),
+        deepoptiflex: DeepOptiFlexEngine::new(DeepOptiFlexPolicy::default()),
+        manual_trip: Arc::new(Mutex::new(false)),
+        latest_metrics: Arc::new(Mutex::new(None)),
+        latest_deepoptiflex: Arc::new(Mutex::new(None)),
+        telemetry_history: Arc::new(Mutex::new(VecDeque::with_capacity(60))),
+        self_healing_feed: Arc::new(Mutex::new(Vec::new())),
     };
 
     // 4. Siapkan Router Axum
     let app = app_router(state);
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8000));
+    let port: u16 = std::env::var("PORT")
+        .ok()
+        .and_then(|p| p.parse().ok())
+        .unwrap_or(8088);
+
+    let addr = SocketAddr::from(([127, 0, 0, 1], port));
     println!("🚀 Server aktif mendengarkan di: http://{}", addr);
-    println!("📡 Endpoint Telemetri: POST http://{}/api/v1/telemetry/ingest", addr);
-    println!("💓 Endpoint Health   : GET  http://{}/api/v1/health", addr);
-    println!("🌐 GPlay AI Gateway  : https://gplay.ctar.tech");
+    println!("📊 Web UI Dashboard    : http://{}/", addr);
+    println!("📡 Telemetry Ingest     : POST http://{}/api/v1/telemetry/ingest", addr);
+    println!("💓 Live Telemetry API   : GET  http://{}/api/v1/telemetry/live", addr);
+    println!("🌐 GPlay AI Gateway     : https://gplay.ctar.tech");
     println!("===================================================================");
 
     let listener = tokio::net::TcpListener::bind(addr)
         .await
-        .expect("Gagal mengikat port 8000");
+        .unwrap_or_else(|e| panic!("Gagal mengikat port {}: {}", port, e));
 
     axum::serve(listener, app)
         .await

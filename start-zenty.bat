@@ -53,7 +53,7 @@ echo     - Health Check : http://127.0.0.1:8088/health
 echo     - Telemetry Ingest : http://127.0.0.1:8088/api/v1/telemetry/ingest
 echo.
 echo [*] Membuka antarmuka monitoring di browser...
-start http://127.0.0.1:8088/health
+start http://127.0.0.1:8088/
 
 echo.
 echo ===================================================================

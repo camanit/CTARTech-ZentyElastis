@@ -33,7 +33,7 @@ logger = logging.getLogger("ZentyEdgeAgent")
 EDGE_HARNESS_SECRET = "zenty_mesh_edge_secret_key_2026"
 
 class EdgeTelemetryAgent:
-    def __init__(self, gateway_url: str = "http://127.0.0.1:8000", device_id: str = None, api_key: str = "ctar_edge_token"):
+    def __init__(self, gateway_url: str = "http://127.0.0.1:8088", device_id: str = None, api_key: str = "ctar_edge_token"):
         self.gateway_url = gateway_url.rstrip("/")
         self.device_id = device_id or f"node_{socket.gethostname()}"
         self.api_key = api_key
@@ -197,9 +197,8 @@ class EdgeTelemetryAgent:
             logger.info("Agen dimatikan oleh pengguna.")
 
 if __name__ == "__main__":
-    agent = EdgeTelemetryAgent(gateway_url="http://127.0.0.1:8000", device_id="gpu-h100-node-01")
-    metrics = agent.read_metrics()
-    print("\nContoh Payload Telemetri Multi-Dimensi:")
-    for k, v in metrics.items():
-        print(f"  {k:22}: {v}")
-    print("\nUntuk streaming kontinyu, jalankan saat Rust Core Gateway telah aktif!")
+    gateway = sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8088"
+    agent = EdgeTelemetryAgent(gateway_url=gateway, device_id="gpu-h100-node-01")
+    print("\n⚡ CTARTech-ZentyElastis: Edge Agent Aktif!")
+    print(f"📡 Mengirimkan telemetri streaming ke {gateway}/api/v1/telemetry/ingest...")
+    agent.run_loop(interval_sec=1.5)
