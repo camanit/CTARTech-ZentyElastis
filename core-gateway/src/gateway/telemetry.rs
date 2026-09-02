@@ -127,6 +127,8 @@ pub fn app_router(state: AppState) -> Router {
         // 1. Root & Web UI Dashboard
         .route("/", get(dashboard_handler))
         .route("/dashboard", get(dashboard_handler))
+        .route("/favicon.ico", get(favicon_handler))
+        .route("/assets/logo.png", get(logo_handler))
 
         // 2. Telemetry Ingest & Real-time API
         .route("/api/v1/telemetry/ingest", post(ingest_telemetry_handler))
@@ -148,6 +150,18 @@ pub fn app_router(state: AppState) -> Router {
 /// Handler rendering Web Dashboard HTML
 pub async fn dashboard_handler() -> Html<&'static str> {
     Html(render_dashboard_html())
+}
+
+/// Handler serving favicon.ico directly from compiled binary
+pub async fn favicon_handler() -> impl IntoResponse {
+    let ico = include_bytes!("../../../assets/logo.ico");
+    ([(axum::http::header::CONTENT_TYPE, "image/x-icon")], ico.to_vec())
+}
+
+/// Handler serving logo.png directly from compiled binary
+pub async fn logo_handler() -> impl IntoResponse {
+    let png = include_bytes!("../../../assets/logo.png");
+    ([(axum::http::header::CONTENT_TYPE, "image/png")], png.to_vec())
 }
 
 /// Handler live status telemetri untuk dashboard polling

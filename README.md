@@ -1,10 +1,16 @@
-# CTARTech-ZentyElastis ⚡
-> **Next-Gen GPU Power Optimization, Zero-Latency Telemetry Engine & Digital Twin**
+<p align="center">
+  <img src="assets/logo.png" alt="CTARTech-ZentyElastis Logo" width="180" style="border-radius: 24px; box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);" />
+</p>
 
-[![GitHub license](https://img.shields.io/badge/license-Open--Core-blue.svg)](LICENSE)
-[![Rust](https://img.shields.io/badge/Rust-Axum%20%3C0.1ms-orange.svg)](https://www.rust-lang.org/)
-[![AI Gateway](https://img.shields.io/badge/AI%20Gateway-gplay.ctar.tech-green.svg)](https://gplay.ctar.tech)
-[![Compliance](https://img.shields.io/badge/Compliance-ISO%2027001%20%7C%20UU%20PDP-brightgreen.svg)](#-kepatuhan-standar-enterprise)
+<h1 align="center">CTARTech-ZentyElastis ⚡</h1>
+<p align="center"><strong>Next-Gen GPU Power Optimization, Zero-Latency Telemetry Engine & Digital Twin</strong></p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Open--Core-blue.svg" alt="License" /></a>
+  <a href="https://www.rust-lang.org/"><img src="https://img.shields.io/badge/Rust-Axum%20%3C0.1ms-orange.svg" alt="Rust" /></a>
+  <a href="https://gplay.ctar.tech"><img src="https://img.shields.io/badge/AI%20Gateway-gplay.ctar.tech-green.svg" alt="AI Gateway" /></a>
+  <a href="#-kepatuhan-standar-enterprise"><img src="https://img.shields.io/badge/Compliance-ISO%2027001%20%7C%20UU%20PDP-brightgreen.svg" alt="Compliance" /></a>
+</p>
 
 CTARTech-ZentyElastis adalah sistem orkestrasi dan manajemen daya cerdas untuk kluster GPU/TPU/CPU berskala enterprise dan pusat data kecerdasan buatan (*AI Data Centers*). Sistem ini mengombinasikan backend **Rust Axum berlatensi ultra-rendah (<0.1ms)** dengan **GPlay AI Data Gateway (`gplay.ctar.tech`)** sebagai pusat analitik pola beban komputasi dan optimasi konsumsi energi (*Peak Shaving*).
 

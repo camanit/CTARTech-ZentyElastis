@@ -6,6 +6,7 @@ pub fn render_dashboard_html() -> &'static str {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTARTech-ZentyElastis | Resource Twin & Telemetry Mesh</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -191,7 +192,7 @@ pub fn render_dashboard_html() -> &'static str {
     <!-- Navbar Header -->
     <header class="glass">
         <div class="logo-area">
-            <div class="logo-badge">⚡</div>
+            <img src="/assets/logo.png" alt="CTARTech Logo" style="width: 44px; height: 44px; border-radius: 12px; box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); object-fit: cover;" />
             <div class="logo-title">
                 <h1>CTARTech-ZentyElastis™</h1>
                 <p>Autonomous AI Data Center Telemetry Mesh & Digital Twin</p>
