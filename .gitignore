@@ -25,6 +25,7 @@ dist/
 Desain Arsitektur Sistem CTARTech-Elastis.txt
 tools/
 tools/license-issuer/
+generate-license.bat
 *.lic
 *.key
 *.pem
